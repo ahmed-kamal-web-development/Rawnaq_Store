@@ -1,179 +1,518 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RAWNAQ</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body{background:#f5f5f5;font-family:Arial;overflow-x:hidden}
-
-    /* Splash */
-    #splash{position:fixed;width:100%;height:100vh;background:linear-gradient(45deg,#e0e7ff,#f0fdfa);display:flex;justify-content:center;align-items:center;font-size:35px;font-weight:bold;color:#1e3a8a;z-index:1000}
-
-    /* NAV */
-    nav{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:linear-gradient(90deg,#3b82f6,#10b981,#f59e0b);border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
-    .brand{color:white;font-size:22px;font-weight:bold}
-    .nav-links{display:flex;gap:15px}
-    .nav-links button{background:rgba(255,255,255,0.2);padding:8px 14px;border:none;border-radius:8px;color:white;cursor:pointer;transition:.3s}
-    .nav-links button:hover{background:rgba(255,255,255,0.4);transform:scale(1.1)}
-
-    /* Hamburger */
-    .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer}
-    .hamburger div{width:25px;height:3px;background:white}
-
-    .mobile-menu{display:none;flex-direction:column;gap:10px;background:white;padding:15px;margin-top:10px;border-radius:10px}
-
-    /* Pages */
-    .page{display:none;padding:20px}
-    .active{display:block}
-
-    /* Products */
-    #productList{display:flex;flex-wrap:wrap;gap:20px}
-
-    .product-card{background:white;padding:15px;border-radius:15px;box-shadow:0 6px 15px rgba(0,0,0,0.15);width:250px;transition:.3s}
-    .product-card:hover{transform:translateY(-8px) scale(1.05)}
-
-    /* الصورة على قدها */
-    .product-card img{width:100%;height:auto;object-fit:contain;border-radius:10px}
-
-    .add-btn{margin-top:10px;background:#3b82f6;color:white;padding:7px 15px;border:none;border-radius:8px;cursor:pointer}
-
-    /* Cart Page */
-    #cartItems div{background:white;margin:10px 0;padding:15px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.15);display:flex;justify-content:space-between}
-
-    #cart{max-width:600px;margin:auto}
-    #cart h1{font-size:28px;font-weight:bold;text-align:center}
-    #totalPrice{font-weight:bold;font-size:20px;color:#10b981}
-
-    /* Responsive */
-    @media(max-width:768px){
-      .nav-links{display:none}
-      .hamburger{display:flex}
-      #productList{justify-content:center}
-      .product-card{width:90%}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>رونق - متجر قوائم المهام والمخططات</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { font-family: 'Cairo', sans-serif; background: #f3f4f6; }
+        .nav { background: linear-gradient(135deg, #1e1b4b, #4c1d95); }
+        .btn-primary { background: #4f46e5; transition: 0.2s; }
+        .btn-primary:hover { background: #4338ca; transform: scale(1.02); }
+        .product-card { transition: 0.2s; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .gallery-arrow { background: rgba(0,0,0,0.5); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); }
+        .gallery-container { position: relative; }
+        .view { display: none; animation: fade 0.2s; }
+        @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+        .search-box { transition: all 0.3s ease; }
+        .search-box:focus-within { transform: scale(1.01); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .preview-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; }
+        @media (max-width: 768px) {
+            .container { padding-left: 12px; padding-right: 12px; }
+            button, .btn, .rounded-full { padding: 10px 16px; }
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-100">
 
-<div id="splash">Welcome To Rawnaq Store</div>
-
-<div id="main" style="display:none;">
-
-<nav>
-  <div class="brand">RAWNAQ</div>
-
-  <div class="nav-links">
-    <button onclick="showPage('home')">Home</button>
-    <button onclick="showPage('products')">Products</button>
-    <button onclick="showPage('contact')">Call Us</button>
-    <button onclick="showPage('cart')">Cart</button>
-  </div>
-
-  <div class="hamburger" onclick="toggleMenu()">
-    <div></div><div></div><div></div>
-  </div>
+<!-- Navbar -->
+<nav class="nav text-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+        <div id="brandName" class="text-2xl font-bold cursor-pointer select-none">✨ رونق</div>
+        <div class="flex gap-4 items-center">
+            <button onclick="app.navigate('home')" class="hover:bg-white/20 px-3 py-1 rounded-full transition">الرئيسية</button>
+            <button onclick="app.navigate('products')" class="hover:bg-white/20 px-3 py-1 rounded-full transition">المنتجات</button>
+            <button onclick="app.navigate('cart')" class="relative hover:bg-white/20 px-3 py-1 rounded-full transition">
+                السلة <span id="cartCount" class="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full px-1.5">0</span>
+            </button>
+            <button id="adminPanelBtn" onclick="app.navigate('admin')" class="hidden bg-green-700 px-3 py-1 rounded-full transition">📋 إدارة المنتجات</button>
+        </div>
+    </div>
 </nav>
 
-<div id="mobileMenu" class="mobile-menu">
-  <button onclick="showPage('home')">Home</button>
-  <button onclick="showPage('products')">Products</button>
-  <button onclick="showPage('contact')">Call Us</button>
-  <button onclick="showPage('cart')">Cart</button>
-</div>
+<div class="container mx-auto px-4 py-6">
+    <!-- الصفحة الرئيسية (بطاقات الأقسام الجديدة) -->
+    <div id="homeView" class="view">
+        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl text-white p-8 mb-8 text-center">
+            <h1 class="text-4xl font-bold">مرحباً بك في رونق</h1>
+            <p class="text-lg mt-2">نظم حياتك بأفضل قوائم المهام والمخططات</p>
+            <button onclick="app.navigate('products')" class="mt-4 bg-white text-indigo-700 px-6 py-2 rounded-full font-bold">تسوق الآن</button>
+        </div>
+        
+        <!-- بطاقات الأقسام الجديدة (To-Do Lists, Planners, Others) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <div class="bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl transition">
+                <i class="fas fa-check-circle text-5xl text-indigo-600 mb-3"></i>
+                <h3 class="text-2xl font-bold mb-2">📋 قوائم المهام</h3>
+                <p class="text-gray-600">منظمات يومية، قوائم مراجعة، ومفكرات إنجاز</p>
+                <button onclick="app.navigate('products')" class="mt-4 bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full">تسوق الآن</button>
+            </div>
+            <div class="bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl transition">
+                <i class="fas fa-calendar-alt text-5xl text-indigo-600 mb-3"></i>
+                <h3 class="text-2xl font-bold mb-2">📅 مخططات</h3>
+                <p class="text-gray-600">مخططات أسبوعية، شهرية، وسنوية لتنظيم وقتك</p>
+                <button onclick="app.navigate('products')" class="mt-4 bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full">تسوق الآن</button>
+            </div>
+            <div class="bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl transition">
+                <i class="fas fa-pen-alt text-5xl text-indigo-600 mb-3"></i>
+                <h3 class="text-2xl font-bold mb-2">✨ أخرى</h3>
+                <p class="text-gray-600">أدوات كتابة، ملصقات، وملحقات إبداعية</p>
+                <button onclick="app.navigate('products')" class="mt-4 bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full">تسوق الآن</button>
+            </div>
+        </div>
+        
+        <!-- قسم مميزات إضافية -->
+        <div class="mt-12 bg-gray-50 rounded-2xl p-6 text-center">
+            <h2 class="text-2xl font-bold mb-4">لماذا رونق؟</h2>
+            <div class="flex flex-wrap justify-center gap-8">
+                <div><i class="fas fa-truck text-indigo-600 text-3xl"></i><p class="mt-1">توصيل سريع</p></div>
+                <div><i class="fas fa-shield-alt text-indigo-600 text-3xl"></i><p class="mt-1">دفع آمن</p></div>
+                <div><i class="fas fa-headset text-indigo-600 text-3xl"></i><p class="mt-1">دعم 24/7</p></div>
+            </div>
+        </div>
+    </div>
 
-<!-- Home -->
-<div id="home" class="page active text-center">
-  <h1 class="text-3xl font-bold">Welcome to Rawnaq Store</h1>
-  <button class="mt-5 bg-green-500 text-white px-5 py-2 rounded" onclick="showPage('products')">Go to Products</button>
-</div>
+    <!-- صفحة المنتجات (مع فلاتر محدثة) -->
+    <div id="productsView" class="view">
+        <div class="flex flex-wrap gap-4 mb-4 items-center">
+            <select id="filterCat" class="border p-2 rounded">
+                <option value="all">كل التصنيفات</option>
+                <option value="todolists">📋 قوائم المهام</option>
+                <option value="planners">📅 مخططات</option>
+                <option value="others">✨ أخرى</option>
+            </select>
+            <select id="filterPrice" class="border p-2 rounded">
+                <option value="">ترتيب حسب السعر</option>
+                <option value="low">الأقل سعراً</option>
+                <option value="high">الأعلى سعراً</option>
+            </select>
+        </div>
+        <div class="mb-6">
+            <div class="search-box relative max-w-md">
+                <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج (اسم أو وصف)" class="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent shadow-sm">
+            </div>
+        </div>
+        <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+    </div>
 
-<!-- Products -->
-<div id="products" class="page">
-  <h1 class="text-2xl mb-4">Products</h1>
-  <div id="productList"></div>
-</div>
+    <!-- باقي الصفحات (تفاصيل، سلة، شحن، أدمن) -->
+    <div id="detailView" class="view">
+        <div class="bg-white rounded-2xl shadow p-6">
+            <div class="gallery-container">
+                <img id="detailImg" class="w-full max-h-96 object-contain rounded-lg">
+                <button id="prevBtn" onclick="app.prevImage()" class="gallery-arrow left-2" style="left: 10px; display: none;">❮</button>
+                <button id="nextBtn" onclick="app.nextImage()" class="gallery-arrow right-2" style="right: 10px; display: none;">❯</button>
+            </div>
+            <h2 id="detailName" class="text-3xl font-bold mt-4"></h2>
+            <p id="detailPrice" class="text-2xl text-green-700"></p>
+            <p><strong>التصنيف:</strong> <span id="detailCat"></span></p>
+            <p id="detailDesc" class="mt-3 text-gray-600"></p>
+            <button onclick="app.addToCartFromDetail()" class="mt-4 bg-indigo-600 text-white px-6 py-2 rounded-full">➕ أضف للسلة</button>
+        </div>
+    </div>
 
-<!-- Cart -->
-<div id="cart" class="page">
-  <h1>Cart</h1>
-  <div id="cartItems"></div>
-  <div class="mt-4">Total: <span id="totalPrice">0</span> EGP</div>
-</div>
+    <div id="cartView" class="view">
+        <h2 class="text-2xl font-bold mb-4">سلة المشتريات</h2>
+        <div id="cartItems" class="bg-white rounded-xl shadow p-4"></div>
+        <div class="mt-4 text-left">
+            <p class="text-xl">الإجمالي: <span id="cartTotal">0</span> ج.م</p>
+            <button onclick="app.navigate('checkout')" class="mt-3 bg-emerald-600 text-white px-8 py-2 rounded-full">إتمام الشراء</button>
+        </div>
+    </div>
 
-<!-- Contact -->
-<div id="contact" class="page text-center">
-  <h1>Call Us</h1>
-  <button class="bg-green-500 text-white px-6 py-3 rounded mt-5" onclick="contactUs()">تواصل معنا</button>
-</div>
+    <div id="checkoutView" class="view">
+        <div class="bg-white p-6 rounded-2xl shadow max-w-lg mx-auto">
+            <h2 class="text-2xl font-bold mb-4">بيانات الشحن</h2>
+            <input id="custName" placeholder="الاسم الكامل" class="w-full border p-2 mb-3 rounded">
+            <textarea id="custAddress" placeholder="العنوان بالتفصيل" class="w-full border p-2 mb-3 rounded"></textarea>
+            <button onclick="app.sendWhatsApp()" class="bg-green-600 text-white w-full py-2 rounded-xl text-lg">إتمام الشراء</button>
+        </div>
+    </div>
 
+    <div id="adminView" class="view">
+        <div class="bg-white rounded-2xl shadow p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4">➕ إضافة منتج جديد</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" id="prodName" placeholder="اسم المنتج" class="border p-2 rounded">
+                <input type="number" id="prodPrice" placeholder="السعر" class="border p-2 rounded">
+                <select id="prodCategory" class="border p-2 rounded">
+                    <option value="todolists">📋 قوائم المهام</option>
+                    <option value="planners">📅 مخططات</option>
+                    <option value="others">✨ أخرى</option>
+                </select>
+                <textarea id="prodDesc" placeholder="الوصف" class="border p-2 rounded" rows="2"></textarea>
+                <div class="col-span-2">
+                    <label class="block font-semibold mb-1">الصورة الرئيسية (من جهازك)</label>
+                    <input type="file" id="prodMainImage" accept="image/*" class="border p-2 rounded w-full">
+                    <div id="mainImagePreview" class="mt-2"></div>
+                </div>
+                <div class="col-span-2">
+                    <label class="block font-semibold mb-1">صور إضافية للمعرض (اختياري، يمكن اختيار عدة صور)</label>
+                    <input type="file" id="prodGalleryImages" accept="image/*" multiple class="border p-2 rounded w-full">
+                    <div id="galleryPreview" class="mt-2 flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+            <button onclick="app.addProduct()" class="mt-4 bg-indigo-600 text-white px-6 py-2 rounded-full">حفظ المنتج</button>
+        </div>
+        <div class="bg-white rounded-2xl shadow p-6">
+            <h2 class="text-2xl font-bold mb-4">📦 المنتجات الحالية</h2>
+            <div id="adminProductsList"></div>
+        </div>
+    </div>
 </div>
 
 <script>
-setTimeout(()=>{document.getElementById('splash').style.display='none';document.getElementById('main').style.display='block';},2000);
+    // ---------- التطبيق الرئيسي ----------
+    const STORAGE_PRODUCTS = 'my_products';
+    const STORAGE_CART = 'my_cart';
+    const STORAGE_CURRENT_PAGE = 'current_page';
+    const ADMIN_PASSWORD = 'admin123';
 
-function showPage(id){
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- document.getElementById('mobileMenu').style.display='none';
-}
+    // منتجات افتراضية جديدة (To-Do Lists, Planners, Others)
+    const defaultProducts = [
+        { id: 'p1', name: 'مفكرة قائمة المهام اليومية', price: 45, category: 'todolists', description: 'دفتر صغير بتصميم أنيق يحتوي على 50 ورقة لقائمة المهام اليومية', imageUrl: 'https://picsum.photos/id/20/400/300', images: ['https://picsum.photos/id/20/400/300','https://picsum.photos/id/21/400/300'] },
+        { id: 'p2', name: 'لوحة مغناطيسية للتخطيط الأسبوعي', price: 120, category: 'planners', description: 'لوحة بيضاء مغناطيسية بحجم A3 مع أقلام وأقلام تخطيط', imageUrl: 'https://picsum.photos/id/40/400/300', images: ['https://picsum.photos/id/40/400/300','https://picsum.photos/id/41/400/300'] },
+        { id: 'p3', name: 'ملصقات ملونة لتنظيم المهام', price: 25, category: 'others', description: 'مجموعة من 100 ملصق بأشكال وألوان مختلفة', imageUrl: 'https://picsum.photos/id/30/400/300', images: ['https://picsum.photos/id/30/400/300','https://picsum.photos/id/31/400/300'] },
+        { id: 'p4', name: 'مخطط شهري حائطي كبير', price: 85, category: 'planners', description: 'مخطط حجم كبير 70*100 سم مع إطار خشبي', imageUrl: 'https://picsum.photos/id/50/400/300', images: ['https://picsum.photos/id/50/400/300','https://picsum.photos/id/51/400/300'] },
+        { id: 'p5', name: 'دفتر قوائم التسوق', price: 30, category: 'todolists', description: 'دفتر صغير مع مقسمات لأقسام التسوق المختلفة', imageUrl: 'https://picsum.photos/id/60/400/300', images: ['https://picsum.photos/id/60/400/300','https://picsum.photos/id/61/400/300'] },
+        { id: 'p6', name: 'حامل هاتف مع لوحة أسبوعية', price: 95, category: 'planners', description: 'حامل أكريليك شفاف مع مساحة لكتابة المهام', imageUrl: 'https://picsum.photos/id/70/400/300', images: ['https://picsum.photos/id/70/400/300','https://picsum.photos/id/71/400/300'] },
+        { id: 'p7', name: 'أقلام تحديد قابلة للمسح', price: 40, category: 'others', description: '5 أقلام بألوان مختلفة للكتابة على اللوحات البيضاء', imageUrl: 'https://picsum.photos/id/80/400/300', images: ['https://picsum.photos/id/80/400/300','https://picsum.photos/id/81/400/300'] },
+        { id: 'p8', name: 'مفكرة أهداف ذكية', price: 65, category: 'todolists', description: 'مفكرة بتصميم فريد لتحقيق الأهداف اليومية', imageUrl: 'https://picsum.photos/id/90/400/300', images: ['https://picsum.photos/id/90/400/300','https://picsum.photos/id/91/400/300'] },
+        { id: 'p9', name: 'تطبيق إلكتروني لتنظيم المهام', price: 150, category: 'todolists', description: 'رابط تحميل تطبيق متكامل (نسخة رقمية)', imageUrl: 'https://picsum.photos/id/100/400/300', images: ['https://picsum.photos/id/100/400/300','https://picsum.photos/id/101/400/300'] },
+        { id: 'p10', name: 'دفتر تتبع العادات', price: 55, category: 'planners', description: 'دفتر بتصميم متابعة العادات الشهرية', imageUrl: 'https://picsum.photos/id/110/400/300', images: ['https://picsum.photos/id/110/400/300','https://picsum.photos/id/111/400/300'] },
+        { id: 'p11', name: 'مجموعة ملصقات تحفيزية', price: 35, category: 'others', description: '20 ملصق بعبارات تحفيزية للوحة المهام', imageUrl: 'https://picsum.photos/id/120/400/300', images: ['https://picsum.photos/id/120/400/300','https://picsum.photos/id/121/400/300'] },
+        { id: 'p12', name: 'لوحة تنظيم الأعمال المنزلية', price: 110, category: 'planners', description: 'لوحة خشبية مع مهام قابلة للتغيير', imageUrl: 'https://picsum.photos/id/130/400/300', images: ['https://picsum.photos/id/130/400/300','https://picsum.photos/id/131/400/300'] },
+        { id: 'p13', name: 'قلم جاف ذكي مع شاشة', price: 200, category: 'others', description: 'قلم رقمي يمكنه تخزين الملاحظات', imageUrl: 'https://picsum.photos/id/140/400/300', images: ['https://picsum.photos/id/140/400/300','https://picsum.photos/id/141/400/300'] },
+        { id: 'p14', name: 'دفتر الأولويات الأسبوعي', price: 48, category: 'todolists', description: 'دفتر صغير بتقسيم يومي لتحديد الأولويات', imageUrl: 'https://picsum.photos/id/150/400/300', images: ['https://picsum.photos/id/150/400/300','https://picsum.photos/id/151/400/300'] },
+        { id: 'p15', name: 'مخطط رقمي PDF قابل للطباعة', price: 25, category: 'planners', description: 'ملف PDF لمخطط سنوي قابل للتعديل', imageUrl: 'https://picsum.photos/id/160/400/300', images: ['https://picsum.photos/id/160/400/300','https://picsum.photos/id/161/400/300'] }
+    ];
 
-function toggleMenu(){
- const menu=document.getElementById('mobileMenu');
- menu.style.display=menu.style.display==='flex'?'none':'flex';
-}
+    let products = [];
+    let cart = [];
+    let isAdmin = false;
+    let currentDetailProduct = null;
+    let currentImages = [];
+    let currentImageIndex = 0;
+    let isMobile = false;
 
-function contactUs(){
- const isMobile=/Android|iPhone/i.test(navigator.userAgent);
- if(isMobile){
-  const choice=confirm('OK واتساب - Cancel مكالمة');
-  if(choice) window.location.href='https://wa.me/201556727629';
-  else window.location.href='tel:01556727629';
- }else{
-  window.location.href='https://wa.me/201556727629';
- }
-}
+    function detectMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+    }
 
-const products=[
- {name:'متتبع عادات',price:35,img:'Tracker.jpg'},
- {name:'Pen',price:10,img:''},
- {name:'Planner',price:100,img:''}
-];
+    function loadData() {
+        const stored = localStorage.getItem(STORAGE_PRODUCTS);
+        if (stored) {
+            products = JSON.parse(stored);
+        } else {
+            products = defaultProducts;
+            localStorage.setItem(STORAGE_PRODUCTS, JSON.stringify(products));
+        }
+        const storedCart = localStorage.getItem(STORAGE_CART);
+        if (storedCart) cart = JSON.parse(storedCart);
+        else cart = [];
+        isAdmin = localStorage.getItem('isAdmin') === 'true';
+        if (isMobile && isAdmin) {
+            isAdmin = false;
+            localStorage.removeItem('isAdmin');
+        }
+    }
 
-let cart=[];
+    function saveProducts() { localStorage.setItem(STORAGE_PRODUCTS, JSON.stringify(products)); }
+    function saveCart() { localStorage.setItem(STORAGE_CART, JSON.stringify(cart)); updateCartCount(); }
+    function updateCartCount() { document.getElementById('cartCount').innerText = cart.reduce((s,i)=> s + i.quantity, 0); }
+    function showToast(msg, type='success') {
+        const toast = document.createElement('div');
+        toast.className = `fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg text-white font-bold ${type==='success'?'bg-green-600':'bg-red-600'}`;
+        toast.innerText = msg;
+        document.body.appendChild(toast);
+        setTimeout(()=>toast.remove(), 3000);
+    }
 
-function loadProducts(){
- const container=document.getElementById('productList');
- products.forEach(p=>{
-  const div=document.createElement('div');
-  div.className='product-card';
-  div.innerHTML=`<img src='${p.img}'><h3>${p.name}</h3><p>${p.price} EGP</p><button class='add-btn'>Add</button>`;
-  div.querySelector('button').onclick=()=>addToCart(p.name,p.price);
-  container.appendChild(div);
- });
-}
+    function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
 
-function addToCart(name,price){
- cart.push({name,price});
- renderCart();
-}
+    function renderProductsGrid(containerId, productsList) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        if (productsList.length === 0) { container.innerHTML = '<div class="text-center py-10">لا توجد منتجات</div>'; return; }
+        container.innerHTML = productsList.map(p => `
+            <div class="bg-white rounded-2xl shadow-md overflow-hidden product-card">
+                <img src="${p.imageUrl}" class="h-48 w-full object-cover">
+                <div class="p-4">
+                    <h3 class="font-bold text-lg">${p.name}</h3>
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-xl font-bold text-emerald-700">${p.price} ج.م</span>
+                    </div>
+                    <button onclick="app.addToCart('${p.id}')" class="mt-3 w-full bg-indigo-600 text-white py-2 rounded-xl">➕ أضف للسلة</button>
+                    <button onclick="app.showDetail('${p.id}')" class="mt-2 w-full border border-indigo-600 text-indigo-600 py-1 rounded-xl">🔍 تفاصيل</button>
+                </div>
+            </div>
+        `).join('');
+    }
 
-function renderCart(){
- const container=document.getElementById('cartItems');
- container.innerHTML='';
- let total=0;
- cart.forEach(i=>{
-  total+=i.price;
-  const div=document.createElement('div');
-  div.innerHTML=`<span>${i.name}</span><span>${i.price} EGP</span>`;
-  container.appendChild(div);
- });
- document.getElementById('totalPrice').innerText=total;
-}
+    function getFilteredProducts() {
+        let filtered = [...products];
+        const cat = document.getElementById('filterCat')?.value;
+        const priceOrder = document.getElementById('filterPrice')?.value;
+        const searchTerm = document.getElementById('searchInput')?.value.trim().toLowerCase() || '';
+        if (cat && cat !== 'all') filtered = filtered.filter(p => p.category === cat);
+        if (searchTerm) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm) || p.description.toLowerCase().includes(searchTerm));
+        if (priceOrder === 'low') filtered.sort((a,b)=> a.price - b.price);
+        if (priceOrder === 'high') filtered.sort((a,b)=> b.price - a.price);
+        return filtered;
+    }
 
-loadProducts();
+    function renderAllProducts() {
+        const filtered = getFilteredProducts();
+        renderProductsGrid('productsGrid', filtered);
+    }
+
+    function refreshFilters() { renderAllProducts(); }
+
+    function showDetail(productId) {
+        const prod = products.find(p => p.id === productId);
+        if (!prod) return;
+        currentDetailProduct = prod;
+        currentImages = prod.images || [prod.imageUrl];
+        currentImageIndex = 0;
+        document.getElementById('detailImg').src = currentImages[0];
+        document.getElementById('detailName').innerText = prod.name;
+        document.getElementById('detailPrice').innerHTML = `${prod.price} ج.م`;
+        document.getElementById('detailDesc').innerText = prod.description;
+        let catName = { todolists: '📋 قوائم المهام', planners: '📅 مخططات', others: '✨ أخرى' }[prod.category] || prod.category;
+        document.getElementById('detailCat').innerText = catName;
+        const prev = document.getElementById('prevBtn'), next = document.getElementById('nextBtn');
+        if (currentImages.length > 1) { prev.style.display = 'flex'; next.style.display = 'flex'; }
+        else { prev.style.display = 'none'; next.style.display = 'none'; }
+        navigate('detail');
+    }
+
+    function nextImage() { if(currentImages.length){ currentImageIndex = (currentImageIndex+1)%currentImages.length; document.getElementById('detailImg').src = currentImages[currentImageIndex]; } }
+    function prevImage() { if(currentImages.length){ currentImageIndex = (currentImageIndex-1+currentImages.length)%currentImages.length; document.getElementById('detailImg').src = currentImages[currentImageIndex]; } }
+
+    function addToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+        const existing = cart.find(i => i.id === productId);
+        if (existing) existing.quantity++;
+        else cart.push({ id: product.id, name: product.name, price: product.price, image: product.imageUrl, quantity: 1 });
+        saveCart();
+        showToast(`تم إضافة ${product.name} إلى السلة`);
+        renderCart();
+    }
+    function addToCartFromDetail() { if(currentDetailProduct) addToCart(currentDetailProduct.id); }
+    function updateCartItem(id, delta) {
+        const idx = cart.findIndex(i => i.id === id);
+        if (idx !== -1) {
+            cart[idx].quantity += delta;
+            if (cart[idx].quantity <= 0) cart.splice(idx, 1);
+            saveCart();
+            renderCart();
+        }
+    }
+    function removeCartItem(id) { cart = cart.filter(i => i.id !== id); saveCart(); renderCart(); }
+    function renderCart() {
+        const container = document.getElementById('cartItems');
+        const totalSpan = document.getElementById('cartTotal');
+        if (!container) return;
+        if (cart.length === 0) { container.innerHTML = '<div class="text-center py-8">السلة فارغة</div>'; totalSpan.innerText = '0'; return; }
+        let total = 0;
+        container.innerHTML = cart.map(item => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            return `<div class="flex justify-between items-center border-b pb-3 mb-3">
+                        <div class="flex gap-3"><img src="${item.image}" class="w-16 h-16 object-cover rounded"><div><p class="font-bold">${item.name}</p><p>${item.price} ج.م</p></div></div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="app.updateCartItem('${item.id}', -1)" class="bg-gray-200 px-2 rounded">-</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="app.updateCartItem('${item.id}', 1)" class="bg-gray-200 px-2 rounded">+</button>
+                            <button onclick="app.removeCartItem('${item.id}')" class="text-red-500"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`;
+        }).join('');
+        totalSpan.innerText = total;
+    }
+
+    function sendWhatsApp() {
+        const name = document.getElementById('custName').value.trim();
+        const address = document.getElementById('custAddress').value.trim();
+        if (!name || !address) { showToast('يرجى ملء جميع بيانات الشحن', 'error'); return; }
+        if (cart.length === 0) { showToast('السلة فارغة', 'error'); return; }
+        let itemsText = '', total = 0;
+        cart.forEach(item => { const itemTotal = item.price * item.quantity; total += itemTotal; itemsText += `• ${item.name} x ${item.quantity} = ${itemTotal} ج.م\n`; });
+        const msg = `🛍️ طلب جديد\n\nالعميل: ${name}\nالعنوان: ${address}\n\nالمنتجات:\n${itemsText}\nالإجمالي: ${total} ج.م`;
+        window.open(`https://wa.me/201112841647?text=${encodeURIComponent(msg)}`, '_blank');
+        cart = []; saveCart(); renderCart(); showToast('تم إرسال الطلب عبر واتساب'); navigate('home');
+    }
+
+    async function addProduct() {
+        if (!isAdmin || isMobile) { showToast('غير مصرح أو لا يمكن من الموبايل', 'error'); return; }
+        const name = document.getElementById('prodName').value.trim();
+        const price = parseFloat(document.getElementById('prodPrice').value);
+        const category = document.getElementById('prodCategory').value;
+        const desc = document.getElementById('prodDesc').value.trim();
+        const mainImageFile = document.getElementById('prodMainImage').files[0];
+        const galleryFiles = document.getElementById('prodGalleryImages').files;
+        if (!name || isNaN(price) || !desc) { showToast('يرجى ملء الحقول الأساسية', 'error'); return; }
+        if (!mainImageFile) { showToast('يرجى اختيار صورة رئيسية للمنتج', 'error'); return; }
+        showToast('جاري رفع الصور...', 'success');
+        const mainImageBase64 = await fileToBase64(mainImageFile);
+        const galleryBase64 = [];
+        for (let i = 0; i < galleryFiles.length; i++) galleryBase64.push(await fileToBase64(galleryFiles[i]));
+        const allImages = [mainImageBase64, ...galleryBase64];
+        const newId = 'p' + Date.now();
+        const newProduct = { id: newId, name, price, category, description: desc, imageUrl: mainImageBase64, images: allImages };
+        products.push(newProduct);
+        saveProducts();
+        renderAllProducts();
+        renderAdminList();
+        document.getElementById('prodName').value = ''; document.getElementById('prodPrice').value = ''; document.getElementById('prodDesc').value = '';
+        document.getElementById('prodMainImage').value = ''; document.getElementById('prodGalleryImages').value = '';
+        document.getElementById('mainImagePreview').innerHTML = ''; document.getElementById('galleryPreview').innerHTML = '';
+        showToast('تم إضافة المنتج بنجاح');
+    }
+
+    function deleteProduct(id) {
+        if (!isAdmin || isMobile) return;
+        if (confirm('هل تريد حذف هذا المنتج؟')) { products = products.filter(p => p.id !== id); saveProducts(); renderAllProducts(); renderAdminList(); showToast('تم الحذف'); }
+    }
+
+    function renderAdminList() {
+        const container = document.getElementById('adminProductsList');
+        if (!container) return;
+        if (products.length === 0) { container.innerHTML = '<div class="text-center py-4">لا توجد منتجات</div>'; return; }
+        container.innerHTML = products.map(p => `<div class="flex justify-between items-center border-b p-3"><div class="flex items-center gap-2"><img src="${p.imageUrl}" class="w-10 h-10 object-cover rounded"> <strong>${p.name}</strong> - ${p.price} ج.م</div><button onclick="app.deleteProduct('${p.id}')" class="text-red-500"><i class="fas fa-trash"></i> حذف</button></div>`).join('');
+    }
+
+    function setupImagePreviews() {
+        const mainInput = document.getElementById('prodMainImage');
+        const galleryInput = document.getElementById('prodGalleryImages');
+        if (mainInput) mainInput.addEventListener('change', (e) => { const preview = document.getElementById('mainImagePreview'); preview.innerHTML = ''; if(e.target.files[0]){ const img = document.createElement('img'); img.src = URL.createObjectURL(e.target.files[0]); img.className = 'preview-img'; preview.appendChild(img); } });
+        if (galleryInput) galleryInput.addEventListener('change', (e) => { const preview = document.getElementById('galleryPreview'); preview.innerHTML = ''; Array.from(e.target.files).forEach(file => { const img = document.createElement('img'); img.src = URL.createObjectURL(file); img.className = 'preview-img'; preview.appendChild(img); }); });
+    }
+
+    // دالة التنقل مع دعم history API
+    function navigate(page, addToHistory = true) {
+        let viewId = '';
+        if (page === 'home') viewId = 'homeView';
+        else if (page === 'products') viewId = 'productsView';
+        else if (page === 'cart') viewId = 'cartView';
+        else if (page === 'checkout') viewId = 'checkoutView';
+        else if (page === 'detail') viewId = 'detailView';
+        else if (page === 'admin') viewId = 'adminView';
+        else return;
+        if (page === 'admin' && (isMobile || !isAdmin)) { showToast('غير مصرح أو لا يمكن من الموبايل', 'error'); return; }
+        
+        document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+        document.getElementById(viewId).style.display = 'block';
+        localStorage.setItem(STORAGE_CURRENT_PAGE, page);
+        
+        if (page === 'products') renderAllProducts();
+        if (page === 'cart') renderCart();
+        if (page === 'admin' && isAdmin && !isMobile) renderAdminList();
+        window.scrollTo(0,0);
+        
+        if (addToHistory) {
+            const state = { page: page };
+            history.pushState(state, '', `#${page}`);
+        }
+    }
+
+    // معالج أزرار المتصفح (الرجوع والتقدم)
+    function handlePopState(event) {
+        const state = event.state;
+        if (state && state.page) {
+            navigate(state.page, false); // لا نضيف إلى history مرة أخرى
+        } else {
+            // إذا لم يكن هناك حالة، نحاول استرجاع الصفحة من localStorage
+            const lastPage = localStorage.getItem(STORAGE_CURRENT_PAGE) || 'home';
+            navigate(lastPage, false);
+        }
+    }
+
+    // الدخول للأدمن من الضغط على اسم المتجر
+    function adminLoginFromBrand() {
+        if (isMobile) {
+            showToast('وضع الأدمن متاح فقط على الكمبيوتر', 'error');
+            return;
+        }
+        if (isAdmin) {
+            isAdmin = false;
+            localStorage.removeItem('isAdmin');
+            document.getElementById('adminPanelBtn').classList.add('hidden');
+            showToast('تم الخروج من وضع الأدمن');
+            if (document.getElementById('adminView').style.display !== 'none') navigate('home');
+        } else {
+            const pwd = prompt('أدخل كلمة سر الأدمن:');
+            if (pwd === ADMIN_PASSWORD) {
+                isAdmin = true;
+                localStorage.setItem('isAdmin', 'true');
+                showToast('تم الدخول كأدمن');
+                document.getElementById('adminPanelBtn').classList.remove('hidden');
+            } else {
+                showToast('كلمة سر خاطئة', 'error');
+            }
+        }
+    }
+
+    function restorePage() {
+        const lastPage = localStorage.getItem(STORAGE_CURRENT_PAGE) || 'home';
+        navigate(lastPage, true); // إضافة إلى history
+    }
+
+    function init() {
+        isMobile = detectMobile();
+        loadData();
+        saveCart();
+        renderAllProducts();
+        renderCart();
+        restorePage();
+        setupImagePreviews();
+        document.getElementById('filterCat')?.addEventListener('change', () => refreshFilters());
+        document.getElementById('filterPrice')?.addEventListener('change', () => refreshFilters());
+        document.getElementById('searchInput')?.addEventListener('input', () => refreshFilters());
+        const brand = document.getElementById('brandName');
+        if (brand) brand.addEventListener('click', adminLoginFromBrand);
+        window.addEventListener('popstate', handlePopState);
+    }
+
+    window.app = {
+        navigate, showDetail, addToCart, addToCartFromDetail, updateCartItem, removeCartItem,
+        nextImage, prevImage, sendWhatsApp, addProduct, deleteProduct
+    };
+    window.app.updateCartItem = updateCartItem;
+    window.app.removeCartItem = removeCartItem;
+    window.app.addToCart = addToCart;
+    window.app.showDetail = showDetail;
+    window.app.nextImage = nextImage;
+    window.app.prevImage = prevImage;
+    window.app.sendWhatsApp = sendWhatsApp;
+    window.app.addProduct = addProduct;
+    window.app.deleteProduct = deleteProduct;
+    window.app.navigate = navigate;
+    window.app.addToCartFromDetail = addToCartFromDetail;
+
+    init();
 </script>
-
 </body>
 </html>
