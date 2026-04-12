@@ -163,6 +163,20 @@
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
         }
+        /* Online users counter style for admin */
+        .online-counter {
+            background: #10b981;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        body.dark-mode .online-counter {
+            background: #059669;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -212,9 +226,12 @@
             </div>
         </div>
         
-        <!-- أيقونات السوشيال ميديا (بدلاً من "لماذا رونق") -->
+        <!-- أيقونات السوشيال ميديا (فيسبوك، إنستا، تليجرام) -->
         <div class="mt-12 bg-gray-50 rounded-2xl p-6 text-center animate-fadeUp" style="animation-delay: 0.2s;">
             <div class="flex justify-center gap-8">
+                <a href="https://www.facebook.com/profile.php?id=61556868793384&mibextid=ZbWKwL" target="_blank" class="social-icon text-6xl text-blue-700 hover:text-blue-800 transition">
+                    <i class="fab fa-facebook"></i>
+                </a>
                 <a href="https://www.instagram.com/rawnaq_stoore?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-icon text-6xl text-pink-600 hover:text-pink-700 transition">
                     <i class="fab fa-instagram"></i>
                 </a>
@@ -295,6 +312,10 @@
 
     <div id="adminView" class="view">
         <div class="bg-white rounded-2xl shadow p-6 mb-6">
+            <!-- عداد المتصلين الآن (يظهر فقط للأدمن) -->
+            <div id="onlineUsersAdminCounter" class="online-counter hidden">
+                <i class="fas fa-globe"></i> المتصلون الآن: <span id="onlineUsersCount">0</span>
+            </div>
             <h2 class="text-2xl font-bold mb-4">➕ إضافة منتج جديد</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input type="text" id="prodName" placeholder="اسم المنتج" class="border p-2 rounded">
@@ -368,6 +389,7 @@
     let recognition = null;
     let isListening = false;
     let activeUsersInterval = null;
+    let onlineUsersInterval = null;
 
     // --- Helper functions ---
     function showToast(message, type = 'success') {
@@ -434,12 +456,9 @@
 
     // دالة للتنقل إلى المنتجات مع فلتر معين
     function filterAndNavigate(category) {
-        // ضبط الفلتر في صفحة المنتجات
         const filterSelect = document.getElementById('filterCat');
         if (filterSelect) filterSelect.value = category;
-        // الانتقال إلى صفحة المنتجات
         navigate('products');
-        // تحديث الشبكة بعد الانتقال (تأخير بسيط لضمان ظهور الصفحة)
         setTimeout(() => {
             refreshFilters();
         }, 100);
@@ -618,7 +637,7 @@
         type();
     }
 
-    // Active users counter (admin only)
+    // Active users counter (fake random for admin only in home page)
     function startActiveUsersCounter() {
         if (!isAdmin) return;
         const counterDiv = document.getElementById('activeUsersCounter');
@@ -639,6 +658,80 @@
         if (counterDiv) counterDiv.classList.add('hidden');
     }
 
+    // Online Users Counter (real based on localStorage/sessionStorage)
+    // كل زائر يفتح الموقع يتم تسجيله في localStorage مع وقت آخر نشاط. العداد يحسب عدد المستخدمين النشطين خلال آخر 5 دقائق.
+    function initOnlineUsersCounter() {
+        // مفتاح التخزين للمستخدمين النشطين
+        const ONLINE_USERS_KEY = 'ronaq_online_users';
+        const SESSION_ID_KEY = 'ronaq_session_id';
+        
+        // إنشاء معرف جلسة فريد للمستخدم الحالي إذا لم يكن موجوداً
+        let sessionId = sessionStorage.getItem(SESSION_ID_KEY);
+        if (!sessionId) {
+            sessionId = 'sid_' + Date.now() + '_' + Math.random().toString(36).substr(2, 8);
+            sessionStorage.setItem(SESSION_ID_KEY, sessionId);
+        }
+        
+        // تحديث آخر نشاط للمستخدم الحالي
+        function updateUserActivity() {
+            let users = JSON.parse(localStorage.getItem(ONLINE_USERS_KEY) || '{}');
+            users[sessionId] = Date.now();
+            // تنظيف المستخدمين الذين انتهت صلاحيتهم (أكثر من 5 دقائق)
+            const now = Date.now();
+            const fiveMinutes = 5 * 60 * 1000;
+            for (let id in users) {
+                if (now - users[id] > fiveMinutes) {
+                    delete users[id];
+                }
+            }
+            localStorage.setItem(ONLINE_USERS_KEY, JSON.stringify(users));
+        }
+        
+        // تحديث النشاط كل دقيقة
+        updateUserActivity();
+        setInterval(updateUserActivity, 60000);
+        
+        // عند إغلاق الصفحة أو التنقل، نحاول حذف الجلسة (ليس مضموناً بالكامل لكن جيد)
+        window.addEventListener('beforeunload', () => {
+            let users = JSON.parse(localStorage.getItem(ONLINE_USERS_KEY) || '{}');
+            delete users[sessionId];
+            localStorage.setItem(ONLINE_USERS_KEY, JSON.stringify(users));
+        });
+        
+        // دالة للحصول على عدد المستخدمين النشطين
+        function getOnlineUsersCount() {
+            let users = JSON.parse(localStorage.getItem(ONLINE_USERS_KEY) || '{}');
+            const now = Date.now();
+            const fiveMinutes = 5 * 60 * 1000;
+            let count = 0;
+            for (let id in users) {
+                if (now - users[id] <= fiveMinutes) count++;
+            }
+            return count;
+        }
+        
+        // تحديث العداد في واجهة الأدمن إذا ظهر
+        function updateAdminCounter() {
+            const counterDiv = document.getElementById('onlineUsersAdminCounter');
+            const countSpan = document.getElementById('onlineUsersCount');
+            if (counterDiv && countSpan && isAdmin && document.getElementById('adminView').style.display !== 'none') {
+                const count = getOnlineUsersCount();
+                countSpan.innerText = count;
+                counterDiv.classList.remove('hidden');
+            } else if (counterDiv) {
+                counterDiv.classList.add('hidden');
+            }
+        }
+        
+        // تحديث العداد كل 30 ثانية
+        updateAdminCounter();
+        if (onlineUsersInterval) clearInterval(onlineUsersInterval);
+        onlineUsersInterval = setInterval(updateAdminCounter, 30000);
+        
+        // استدعاء التحديث عند التبديل بين الصفحات (يتم في navigate)
+        window.updateOnlineAdminCounter = updateAdminCounter;
+    }
+
     // Navigation
     function navigate(page, addToHistory = true) {
         let viewId = '';
@@ -655,11 +748,19 @@
         localStorage.setItem(STORAGE_CURRENT_PAGE, page);
         if (page === 'products') renderAllProducts();
         if (page === 'cart') renderCart();
-        if (page === 'admin' && isAdmin && !isMobile) renderAdminList();
+        if (page === 'admin' && isAdmin && !isMobile) {
+            renderAdminList();
+            // تحديث عداد المتصلين في صفحة الأدمن
+            if (window.updateOnlineAdminCounter) window.updateOnlineAdminCounter();
+        }
         window.scrollTo(0,0);
         if (addToHistory) { const state = { page: page }; history.pushState(state, '', `#${page}`); }
         if (page === 'home' && isAdmin) startActiveUsersCounter();
         else stopActiveUsersCounter();
+        // تحديث عداد الأدمن إذا كنا في صفحة الأدمن
+        if (page === 'admin' && isAdmin && window.updateOnlineAdminCounter) {
+            setTimeout(window.updateOnlineAdminCounter, 100);
+        }
     }
 
     function handlePopState(event) {
@@ -681,6 +782,10 @@
                 document.getElementById('logoutAdminBtn').classList.remove('hidden');
                 renderAllProducts();
                 if (document.getElementById('homeView').style.display !== 'none') startActiveUsersCounter();
+                // تحديث عداد المتصلين إذا كنا في صفحة الأدمن حالياً
+                if (document.getElementById('adminView').style.display !== 'none' && window.updateOnlineAdminCounter) {
+                    setTimeout(window.updateOnlineAdminCounter, 100);
+                }
             } else if (pwd !== null) showToast('❌ كلمة سر خاطئة', 'error');
         }
     }
@@ -725,6 +830,7 @@
         initDarkMode();
         initTypingEffect();
         initVoiceSearch();
+        initOnlineUsersCounter(); // بدء عداد المتصلين الحقيقي
         if (isAdmin && document.getElementById('homeView').style.display !== 'none') startActiveUsersCounter();
     }
 
