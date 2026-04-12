@@ -7,22 +7,161 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body { font-family: 'Cairo', sans-serif; background: #f3f4f6; }
-        .nav { background: linear-gradient(135deg, #1e1b4b, #4c1d95); }
-        .btn-primary { background: #4f46e5; transition: 0.2s; }
-        .btn-primary:hover { background: #4338ca; transform: scale(1.02); }
-        .product-card { transition: 0.2s; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        body {
+            font-family: 'Cairo', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        /* Dark mode */
+        body.dark-mode {
+            background-color: #1a202c;
+            color: #f3f4f6;
+        }
+        body.dark-mode .bg-white { background-color: #2d3748 !important; color: #f3f4f6; }
+        body.dark-mode .bg-gray-100 { background-color: #1a202c !important; }
+        body.dark-mode .bg-gray-50 { background-color: #2d3748 !important; }
+        body.dark-mode .border-gray-300 { border-color: #4a5568 !important; }
+        body.dark-mode .text-gray-600 { color: #cbd5e0 !important; }
+        body.dark-mode .text-gray-700 { color: #e2e8f0 !important; }
+        body.dark-mode .shadow-md { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
+        body.dark-mode .product-card { background-color: #2d3748; }
+        body.dark-mode input, body.dark-mode select, body.dark-mode textarea {
+            background-color: #4a5568; color: #f3f4f6; border-color: #718096;
+        }
+        .nav { background: linear-gradient(135deg, #1e1b4b, #4c1d95); transition: 0.3s; }
+        body.dark-mode .nav { background: linear-gradient(135deg, #0f172a, #2e1065); }
+        
+        /* 3D Button effect */
+        .btn-3d {
+            transition: all 0.08s linear;
+            box-shadow: 0 4px 0 #1e1b4b;
+            transform: translateY(-2px);
+        }
+        .btn-3d:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #1e1b4b;
+        }
+        body.dark-mode .btn-3d {
+            box-shadow: 0 4px 0 #0f172a;
+        }
+        
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fadeUp {
+            animation: fadeUp 0.6s ease-out forwards;
+        }
+        .product-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.5s ease-out forwards;
+        }
+        .product-card:nth-child(1) { animation-delay: 0.05s; }
+        .product-card:nth-child(2) { animation-delay: 0.1s; }
+        .product-card:nth-child(3) { animation-delay: 0.15s; }
+        .product-card:nth-child(4) { animation-delay: 0.2s; }
+        .product-card:nth-child(5) { animation-delay: 0.25s; }
+        .product-card:nth-child(6) { animation-delay: 0.3s; }
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 30px -12px rgba(0,0,0,0.25);
+        }
+        .social-icon {
+            transition: transform 0.2s, filter 0.2s;
+            display: inline-block;
+        }
+        .social-icon:hover {
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 8px rgba(79,70,229,0.5));
+        }
+        
         .gallery-arrow { background: rgba(0,0,0,0.5); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); }
         .gallery-container { position: relative; }
         .view { display: none; animation: fade 0.2s; }
         @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
-        .search-box { transition: all 0.3s ease; }
+        .search-box { transition: all 0.3s ease; position: relative; }
         .search-box:focus-within { transform: scale(1.01); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
         .preview-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; }
+        
+        /* Toast */
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #1f2937;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            font-weight: bold;
+            direction: rtl;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .toast-notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast-notification.success { background: #10b981; }
+        .toast-notification.error { background: #ef4444; }
+        
+        /* Voice search */
+        .voice-btn {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #6b7280;
+            transition: 0.2s;
+        }
+        .voice-btn:hover { color: #4f46e5; }
+        .voice-btn.listening { color: #ef4444; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { transform: translateY(-50%) scale(1); } 50% { transform: translateY(-50%) scale(1.2); } 100% { transform: translateY(-50%) scale(1); } }
+        
+        /* Typing effect */
+        .typed-text {
+            display: inline-block;
+            border-left: 2px solid white;
+            padding-left: 5px;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink { 0%, 100% { border-color: white; } 50% { border-color: transparent; } }
+        
         @media (max-width: 768px) {
             .container { padding-left: 12px; padding-right: 12px; }
             button, .btn, .rounded-full { padding: 10px 16px; }
+        }
+        /* Logout button style */
+        .logout-btn {
+            background-color: #dc2626;
+            margin-right: 8px;
+        }
+        .logout-btn:hover {
+            background-color: #b91c1c;
+        }
+        /* Category card style */
+        .category-card {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -39,59 +178,67 @@
                 السلة <span id="cartCount" class="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full px-1.5">0</span>
             </button>
             <button id="adminPanelBtn" onclick="app.navigate('admin')" class="hidden bg-green-700 px-3 py-1 rounded-full transition">📋 إدارة المنتجات</button>
+            <button id="logoutAdminBtn" onclick="app.logoutAdmin()" class="hidden logout-btn px-3 py-1 rounded-full transition">🚪 خروج الأدمن</button>
+            <button id="darkModeToggle" class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-full transition">🌙</button>
         </div>
     </div>
 </nav>
 
 <div class="container mx-auto px-4 py-6">
-    <!-- الصفحة الرئيسية (بطاقات الأقسام الجديدة) -->
+    <!-- الصفحة الرئيسية -->
     <div id="homeView" class="view">
-        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl text-white p-8 mb-8 text-center">
+        <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl text-white p-8 mb-8 text-center animate-fadeUp">
             <h1 class="text-4xl font-bold">مرحباً بك في رونق</h1>
             <p class="text-lg mt-2">نظم حياتك بأفضل قوائم المهام والمخططات</p>
-            <button onclick="app.navigate('products')" class="mt-4 bg-white text-indigo-700 px-6 py-2 rounded-full font-bold">تسوق الآن</button>
+            <button onclick="app.navigate('products')" class="mt-4 bg-white text-indigo-700 px-6 py-2 rounded-full font-bold btn-3d">تسوق الآن</button>
         </div>
         
-        <!-- بطاقات الأقسام الجديدة (To-Do Lists, Planners, Others) -->
+        <!-- الأقسام الثلاثة (تعمل كفلاتر) -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-            <div class="bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl transition">
+            <div class="category-card bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl transition" onclick="app.filterAndNavigate('todolists')">
                 <i class="fas fa-check-circle text-5xl text-indigo-600 mb-3"></i>
                 <h3 class="text-2xl font-bold mb-2">📋 قوائم المهام</h3>
                 <p class="text-gray-600">منظمات يومية، قوائم مراجعة، ومفكرات إنجاز</p>
-                <button onclick="app.navigate('products')" class="mt-4 bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full">تسوق الآن</button>
             </div>
-            <div class="bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl transition">
+            <div class="category-card bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl transition" onclick="app.filterAndNavigate('planners')">
                 <i class="fas fa-calendar-alt text-5xl text-indigo-600 mb-3"></i>
-                <h3 class="text-2xl font-bold mb-2">📅 مخططات</h3>
+                <h3 class="text-2xl font-bold mb-2">📅 مخططات شهرية</h3>
                 <p class="text-gray-600">مخططات أسبوعية، شهرية، وسنوية لتنظيم وقتك</p>
-                <button onclick="app.navigate('products')" class="mt-4 bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full">تسوق الآن</button>
             </div>
-            <div class="bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl transition">
+            <div class="category-card bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl transition" onclick="app.filterAndNavigate('others')">
                 <i class="fas fa-pen-alt text-5xl text-indigo-600 mb-3"></i>
                 <h3 class="text-2xl font-bold mb-2">✨ أخرى</h3>
                 <p class="text-gray-600">أدوات كتابة، ملصقات، وملحقات إبداعية</p>
-                <button onclick="app.navigate('products')" class="mt-4 bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full">تسوق الآن</button>
             </div>
         </div>
         
-        <!-- قسم مميزات إضافية -->
-        <div class="mt-12 bg-gray-50 rounded-2xl p-6 text-center">
-            <h2 class="text-2xl font-bold mb-4">لماذا رونق؟</h2>
-            <div class="flex flex-wrap justify-center gap-8">
-                <div><i class="fas fa-truck text-indigo-600 text-3xl"></i><p class="mt-1">توصيل سريع</p></div>
-                <div><i class="fas fa-shield-alt text-indigo-600 text-3xl"></i><p class="mt-1">دفع آمن</p></div>
-                <div><i class="fas fa-headset text-indigo-600 text-3xl"></i><p class="mt-1">دعم 24/7</p></div>
+        <!-- أيقونات السوشيال ميديا (بدلاً من "لماذا رونق") -->
+        <div class="mt-12 bg-gray-50 rounded-2xl p-6 text-center animate-fadeUp" style="animation-delay: 0.2s;">
+            <div class="flex justify-center gap-8">
+                <a href="https://www.instagram.com/rawnaq_stoore?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-icon text-6xl text-pink-600 hover:text-pink-700 transition">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://t.me/Rawnaq_Stoore" target="_blank" class="social-icon text-6xl text-blue-500 hover:text-blue-600 transition">
+                    <i class="fab fa-telegram"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- عداد المستخدمين النشطين (للأدمن فقط) -->
+        <div id="activeUsersCounter" class="mt-6 text-center hidden animate-fadeUp">
+            <div class="inline-block bg-indigo-100 text-indigo-800 px-6 py-3 rounded-full shadow">
+                <i class="fas fa-users ml-2"></i> يتسوق معك الآن <span id="activeUsersCount">0</span> شخص
             </div>
         </div>
     </div>
 
-    <!-- صفحة المنتجات (مع فلاتر محدثة) -->
+    <!-- صفحة المنتجات -->
     <div id="productsView" class="view">
         <div class="flex flex-wrap gap-4 mb-4 items-center">
             <select id="filterCat" class="border p-2 rounded">
                 <option value="all">كل التصنيفات</option>
                 <option value="todolists">📋 قوائم المهام</option>
-                <option value="planners">📅 مخططات</option>
+                <option value="planners">📅 مخططات شهرية</option>
                 <option value="others">✨ أخرى</option>
             </select>
             <select id="filterPrice" class="border p-2 rounded">
@@ -103,13 +250,16 @@
         <div class="mb-6">
             <div class="search-box relative max-w-md">
                 <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج (اسم أو وصف)" class="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent shadow-sm">
+                <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج (اسم أو وصف)" class="w-full pr-10 pl-12 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent shadow-sm">
+                <button id="voiceSearchBtn" class="voice-btn" title="بحث صوتي">
+                    <i class="fas fa-microphone"></i>
+                </button>
             </div>
         </div>
         <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </div>
 
-    <!-- باقي الصفحات (تفاصيل، سلة، شحن، أدمن) -->
+    <!-- باقي الصفحات -->
     <div id="detailView" class="view">
         <div class="bg-white rounded-2xl shadow p-6">
             <div class="gallery-container">
@@ -121,7 +271,7 @@
             <p id="detailPrice" class="text-2xl text-green-700"></p>
             <p><strong>التصنيف:</strong> <span id="detailCat"></span></p>
             <p id="detailDesc" class="mt-3 text-gray-600"></p>
-            <button onclick="app.addToCartFromDetail()" class="mt-4 bg-indigo-600 text-white px-6 py-2 rounded-full">➕ أضف للسلة</button>
+            <button onclick="app.addToCartFromDetail()" class="mt-4 bg-indigo-600 text-white px-6 py-2 rounded-full btn-3d">➕ أضف للسلة</button>
         </div>
     </div>
 
@@ -130,7 +280,7 @@
         <div id="cartItems" class="bg-white rounded-xl shadow p-4"></div>
         <div class="mt-4 text-left">
             <p class="text-xl">الإجمالي: <span id="cartTotal">0</span> ج.م</p>
-            <button onclick="app.navigate('checkout')" class="mt-3 bg-emerald-600 text-white px-8 py-2 rounded-full">إتمام الشراء</button>
+            <button onclick="app.navigate('checkout')" class="mt-3 bg-emerald-600 text-white px-8 py-2 rounded-full btn-3d">إتمام الشراء</button>
         </div>
     </div>
 
@@ -139,7 +289,7 @@
             <h2 class="text-2xl font-bold mb-4">بيانات الشحن</h2>
             <input id="custName" placeholder="الاسم الكامل" class="w-full border p-2 mb-3 rounded">
             <textarea id="custAddress" placeholder="العنوان بالتفصيل" class="w-full border p-2 mb-3 rounded"></textarea>
-            <button onclick="app.sendWhatsApp()" class="bg-green-600 text-white w-full py-2 rounded-xl text-lg">إتمام الشراء</button>
+            <button onclick="app.sendWhatsApp()" class="bg-green-600 text-white w-full py-2 rounded-xl text-lg btn-3d">إتمام الشراء</button>
         </div>
     </div>
 
@@ -151,7 +301,7 @@
                 <input type="number" id="prodPrice" placeholder="السعر" class="border p-2 rounded">
                 <select id="prodCategory" class="border p-2 rounded">
                     <option value="todolists">📋 قوائم المهام</option>
-                    <option value="planners">📅 مخططات</option>
+                    <option value="planners">📅 مخططات شهرية</option>
                     <option value="others">✨ أخرى</option>
                 </select>
                 <textarea id="prodDesc" placeholder="الوصف" class="border p-2 rounded" rows="2"></textarea>
@@ -166,14 +316,20 @@
                     <div id="galleryPreview" class="mt-2 flex flex-wrap gap-2"></div>
                 </div>
             </div>
-            <button onclick="app.addProduct()" class="mt-4 bg-indigo-600 text-white px-6 py-2 rounded-full">حفظ المنتج</button>
+            <button onclick="app.addProduct()" class="mt-4 bg-indigo-600 text-white px-6 py-2 rounded-full btn-3d">حفظ المنتج</button>
         </div>
         <div class="bg-white rounded-2xl shadow p-6">
             <h2 class="text-2xl font-bold mb-4">📦 المنتجات الحالية</h2>
             <div id="adminProductsList"></div>
         </div>
+        <div class="mt-4 text-center">
+            <button onclick="app.logoutAdmin()" class="bg-red-600 text-white px-6 py-2 rounded-full btn-3d">🚪 تسجيل خروج الأدمن</button>
+        </div>
     </div>
 </div>
+
+<!-- Toast Container -->
+<div id="toastContainer"></div>
 
 <script>
     // ---------- التطبيق الرئيسي ----------
@@ -181,8 +337,9 @@
     const STORAGE_CART = 'my_cart';
     const STORAGE_CURRENT_PAGE = 'current_page';
     const ADMIN_PASSWORD = 'admin123';
+    const STORAGE_DARK_MODE = 'dark_mode';
 
-    // منتجات افتراضية جديدة (To-Do Lists, Planners, Others)
+    // منتجات افتراضية
     const defaultProducts = [
         { id: 'p1', name: 'مفكرة قائمة المهام اليومية', price: 45, category: 'todolists', description: 'دفتر صغير بتصميم أنيق يحتوي على 50 ورقة لقائمة المهام اليومية', imageUrl: 'https://picsum.photos/id/20/400/300', images: ['https://picsum.photos/id/20/400/300','https://picsum.photos/id/21/400/300'] },
         { id: 'p2', name: 'لوحة مغناطيسية للتخطيط الأسبوعي', price: 120, category: 'planners', description: 'لوحة بيضاء مغناطيسية بحجم A3 مع أقلام وأقلام تخطيط', imageUrl: 'https://picsum.photos/id/40/400/300', images: ['https://picsum.photos/id/40/400/300','https://picsum.photos/id/41/400/300'] },
@@ -208,62 +365,53 @@
     let currentImages = [];
     let currentImageIndex = 0;
     let isMobile = false;
+    let recognition = null;
+    let isListening = false;
+    let activeUsersInterval = null;
 
-    function detectMobile() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+    // --- Helper functions ---
+    function showToast(message, type = 'success') {
+        const toastContainer = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast-notification ${type}`;
+        const icon = type === 'success' ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-exclamation-triangle"></i>';
+        toast.innerHTML = `${icon} <span>${message}</span>`;
+        toastContainer.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 10);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
     }
 
     function loadData() {
         const stored = localStorage.getItem(STORAGE_PRODUCTS);
-        if (stored) {
-            products = JSON.parse(stored);
-        } else {
-            products = defaultProducts;
-            localStorage.setItem(STORAGE_PRODUCTS, JSON.stringify(products));
-        }
+        if (stored) products = JSON.parse(stored);
+        else { products = defaultProducts; localStorage.setItem(STORAGE_PRODUCTS, JSON.stringify(products)); }
         const storedCart = localStorage.getItem(STORAGE_CART);
-        if (storedCart) cart = JSON.parse(storedCart);
-        else cart = [];
+        cart = storedCart ? JSON.parse(storedCart) : [];
         isAdmin = localStorage.getItem('isAdmin') === 'true';
-        if (isMobile && isAdmin) {
-            isAdmin = false;
-            localStorage.removeItem('isAdmin');
-        }
+        if (isMobile && isAdmin) { isAdmin = false; localStorage.removeItem('isAdmin'); }
     }
-
     function saveProducts() { localStorage.setItem(STORAGE_PRODUCTS, JSON.stringify(products)); }
     function saveCart() { localStorage.setItem(STORAGE_CART, JSON.stringify(cart)); updateCartCount(); }
     function updateCartCount() { document.getElementById('cartCount').innerText = cart.reduce((s,i)=> s + i.quantity, 0); }
-    function showToast(msg, type='success') {
-        const toast = document.createElement('div');
-        toast.className = `fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg text-white font-bold ${type==='success'?'bg-green-600':'bg-red-600'}`;
-        toast.innerText = msg;
-        document.body.appendChild(toast);
-        setTimeout(()=>toast.remove(), 3000);
-    }
-
-    function fileToBase64(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-        });
-    }
+    function fileToBase64(file) { return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(file); }); }
 
     function renderProductsGrid(containerId, productsList) {
         const container = document.getElementById(containerId);
         if (!container) return;
         if (productsList.length === 0) { container.innerHTML = '<div class="text-center py-10">لا توجد منتجات</div>'; return; }
+        const adminClass = isAdmin ? 'admin-zoom-effect' : '';
         container.innerHTML = productsList.map(p => `
-            <div class="bg-white rounded-2xl shadow-md overflow-hidden product-card">
+            <div class="bg-white rounded-2xl shadow-md overflow-hidden product-card ${adminClass}">
                 <img src="${p.imageUrl}" class="h-48 w-full object-cover">
                 <div class="p-4">
                     <h3 class="font-bold text-lg">${p.name}</h3>
                     <div class="flex justify-between items-center mt-2">
                         <span class="text-xl font-bold text-emerald-700">${p.price} ج.م</span>
                     </div>
-                    <button onclick="app.addToCart('${p.id}')" class="mt-3 w-full bg-indigo-600 text-white py-2 rounded-xl">➕ أضف للسلة</button>
+                    <button onclick="app.addToCart('${p.id}')" class="mt-3 w-full bg-indigo-600 text-white py-2 rounded-xl btn-3d">➕ أضف للسلة</button>
                     <button onclick="app.showDetail('${p.id}')" class="mt-2 w-full border border-indigo-600 text-indigo-600 py-1 rounded-xl">🔍 تفاصيل</button>
                 </div>
             </div>
@@ -281,13 +429,21 @@
         if (priceOrder === 'high') filtered.sort((a,b)=> b.price - a.price);
         return filtered;
     }
-
-    function renderAllProducts() {
-        const filtered = getFilteredProducts();
-        renderProductsGrid('productsGrid', filtered);
-    }
-
+    function renderAllProducts() { renderProductsGrid('productsGrid', getFilteredProducts()); }
     function refreshFilters() { renderAllProducts(); }
+
+    // دالة للتنقل إلى المنتجات مع فلتر معين
+    function filterAndNavigate(category) {
+        // ضبط الفلتر في صفحة المنتجات
+        const filterSelect = document.getElementById('filterCat');
+        if (filterSelect) filterSelect.value = category;
+        // الانتقال إلى صفحة المنتجات
+        navigate('products');
+        // تحديث الشبكة بعد الانتقال (تأخير بسيط لضمان ظهور الصفحة)
+        setTimeout(() => {
+            refreshFilters();
+        }, 100);
+    }
 
     function showDetail(productId) {
         const prod = products.find(p => p.id === productId);
@@ -299,14 +455,13 @@
         document.getElementById('detailName').innerText = prod.name;
         document.getElementById('detailPrice').innerHTML = `${prod.price} ج.م`;
         document.getElementById('detailDesc').innerText = prod.description;
-        let catName = { todolists: '📋 قوائم المهام', planners: '📅 مخططات', others: '✨ أخرى' }[prod.category] || prod.category;
+        let catName = { todolists: '📋 قوائم المهام', planners: '📅 مخططات شهرية', others: '✨ أخرى' }[prod.category] || prod.category;
         document.getElementById('detailCat').innerText = catName;
         const prev = document.getElementById('prevBtn'), next = document.getElementById('nextBtn');
         if (currentImages.length > 1) { prev.style.display = 'flex'; next.style.display = 'flex'; }
         else { prev.style.display = 'none'; next.style.display = 'none'; }
         navigate('detail');
     }
-
     function nextImage() { if(currentImages.length){ currentImageIndex = (currentImageIndex+1)%currentImages.length; document.getElementById('detailImg').src = currentImages[currentImageIndex]; } }
     function prevImage() { if(currentImages.length){ currentImageIndex = (currentImageIndex-1+currentImages.length)%currentImages.length; document.getElementById('detailImg').src = currentImages[currentImageIndex]; } }
 
@@ -317,7 +472,7 @@
         if (existing) existing.quantity++;
         else cart.push({ id: product.id, name: product.name, price: product.price, image: product.imageUrl, quantity: 1 });
         saveCart();
-        showToast(`تم إضافة ${product.name} إلى السلة`);
+        showToast(`✅ تم إضافة ${product.name} إلى السلة`, 'success');
         renderCart();
     }
     function addToCartFromDetail() { if(currentDetailProduct) addToCart(currentDetailProduct.id); }
@@ -330,7 +485,7 @@
             renderCart();
         }
     }
-    function removeCartItem(id) { cart = cart.filter(i => i.id !== id); saveCart(); renderCart(); }
+    function removeCartItem(id) { cart = cart.filter(i => i.id !== id); saveCart(); renderCart(); showToast('🗑️ تم إزالة المنتج من السلة', 'success'); }
     function renderCart() {
         const container = document.getElementById('cartItems');
         const totalSpan = document.getElementById('cartTotal');
@@ -356,13 +511,13 @@
     function sendWhatsApp() {
         const name = document.getElementById('custName').value.trim();
         const address = document.getElementById('custAddress').value.trim();
-        if (!name || !address) { showToast('يرجى ملء جميع بيانات الشحن', 'error'); return; }
-        if (cart.length === 0) { showToast('السلة فارغة', 'error'); return; }
+        if (!name || !address) { showToast('❌ يرجى ملء جميع بيانات الشحن', 'error'); return; }
+        if (cart.length === 0) { showToast('❌ السلة فارغة', 'error'); return; }
         let itemsText = '', total = 0;
         cart.forEach(item => { const itemTotal = item.price * item.quantity; total += itemTotal; itemsText += `• ${item.name} x ${item.quantity} = ${itemTotal} ج.م\n`; });
         const msg = `🛍️ طلب جديد\n\nالعميل: ${name}\nالعنوان: ${address}\n\nالمنتجات:\n${itemsText}\nالإجمالي: ${total} ج.م`;
         window.open(`https://wa.me/201112841647?text=${encodeURIComponent(msg)}`, '_blank');
-        cart = []; saveCart(); renderCart(); showToast('تم إرسال الطلب عبر واتساب'); navigate('home');
+        cart = []; saveCart(); renderCart(); showToast('✅ تم إرسال الطلب عبر واتساب', 'success'); navigate('home');
     }
 
     async function addProduct() {
@@ -389,12 +544,12 @@
         document.getElementById('prodName').value = ''; document.getElementById('prodPrice').value = ''; document.getElementById('prodDesc').value = '';
         document.getElementById('prodMainImage').value = ''; document.getElementById('prodGalleryImages').value = '';
         document.getElementById('mainImagePreview').innerHTML = ''; document.getElementById('galleryPreview').innerHTML = '';
-        showToast('تم إضافة المنتج بنجاح');
+        showToast('تم إضافة المنتج بنجاح', 'success');
     }
 
     function deleteProduct(id) {
         if (!isAdmin || isMobile) return;
-        if (confirm('هل تريد حذف هذا المنتج؟')) { products = products.filter(p => p.id !== id); saveProducts(); renderAllProducts(); renderAdminList(); showToast('تم الحذف'); }
+        if (confirm('هل تريد حذف هذا المنتج؟')) { products = products.filter(p => p.id !== id); saveProducts(); renderAllProducts(); renderAdminList(); showToast('تم الحذف', 'success'); }
     }
 
     function renderAdminList() {
@@ -411,7 +566,80 @@
         if (galleryInput) galleryInput.addEventListener('change', (e) => { const preview = document.getElementById('galleryPreview'); preview.innerHTML = ''; Array.from(e.target.files).forEach(file => { const img = document.createElement('img'); img.src = URL.createObjectURL(file); img.className = 'preview-img'; preview.appendChild(img); }); });
     }
 
-    // دالة التنقل مع دعم history API
+    // Voice search
+    function initVoiceSearch() {
+        const voiceBtn = document.getElementById('voiceSearchBtn');
+        const searchInput = document.getElementById('searchInput');
+        if (!voiceBtn || !searchInput) return;
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) { voiceBtn.style.display = 'none'; return; }
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.lang = 'ar-EG';
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        voiceBtn.addEventListener('click', () => {
+            if (isListening) { recognition.stop(); return; }
+            try { recognition.start(); isListening = true; voiceBtn.classList.add('listening'); showToast('🎤 تحدث الآن...', 'success'); } catch(e) { showToast('❌ خطأ في الميكروفون', 'error'); }
+        });
+        recognition.onresult = (event) => { const transcript = event.results[0][0].transcript; searchInput.value = transcript; refreshFilters(); voiceBtn.classList.remove('listening'); isListening = false; };
+        recognition.onerror = () => { voiceBtn.classList.remove('listening'); isListening = false; };
+        recognition.onend = () => { voiceBtn.classList.remove('listening'); isListening = false; };
+    }
+
+    // Dark Mode
+    function initDarkMode() {
+        const toggle = document.getElementById('darkModeToggle');
+        const isDark = localStorage.getItem(STORAGE_DARK_MODE) === 'true';
+        if (isDark) document.body.classList.add('dark-mode');
+        toggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const dark = document.body.classList.contains('dark-mode');
+            localStorage.setItem(STORAGE_DARK_MODE, dark);
+            toggle.innerHTML = dark ? '☀️' : '🌙';
+        });
+        toggle.innerHTML = isDark ? '☀️' : '🌙';
+    }
+
+    // Typing effect for brand name
+    function initTypingEffect() {
+        const brand = document.getElementById('brandName');
+        const originalText = brand.innerText; // "✨ رونق"
+        brand.innerText = '';
+        let i = 0;
+        function type() {
+            if (i < originalText.length) {
+                brand.innerText += originalText.charAt(i);
+                i++;
+                setTimeout(type, 150);
+            } else {
+                brand.style.borderLeft = 'none';
+            }
+        }
+        type();
+    }
+
+    // Active users counter (admin only)
+    function startActiveUsersCounter() {
+        if (!isAdmin) return;
+        const counterDiv = document.getElementById('activeUsersCounter');
+        const countSpan = document.getElementById('activeUsersCount');
+        if (!counterDiv || !countSpan) return;
+        counterDiv.classList.remove('hidden');
+        function updateCounter() {
+            const randomUsers = Math.floor(Math.random() * 20) + 3;
+            countSpan.innerText = randomUsers;
+        }
+        updateCounter();
+        if (activeUsersInterval) clearInterval(activeUsersInterval);
+        activeUsersInterval = setInterval(updateCounter, 60000);
+    }
+    function stopActiveUsersCounter() {
+        if (activeUsersInterval) clearInterval(activeUsersInterval);
+        const counterDiv = document.getElementById('activeUsersCounter');
+        if (counterDiv) counterDiv.classList.add('hidden');
+    }
+
+    // Navigation
     function navigate(page, addToHistory = true) {
         let viewId = '';
         if (page === 'home') viewId = 'homeView';
@@ -422,62 +650,63 @@
         else if (page === 'admin') viewId = 'adminView';
         else return;
         if (page === 'admin' && (isMobile || !isAdmin)) { showToast('غير مصرح أو لا يمكن من الموبايل', 'error'); return; }
-        
         document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
         document.getElementById(viewId).style.display = 'block';
         localStorage.setItem(STORAGE_CURRENT_PAGE, page);
-        
         if (page === 'products') renderAllProducts();
         if (page === 'cart') renderCart();
         if (page === 'admin' && isAdmin && !isMobile) renderAdminList();
         window.scrollTo(0,0);
-        
-        if (addToHistory) {
-            const state = { page: page };
-            history.pushState(state, '', `#${page}`);
-        }
+        if (addToHistory) { const state = { page: page }; history.pushState(state, '', `#${page}`); }
+        if (page === 'home' && isAdmin) startActiveUsersCounter();
+        else stopActiveUsersCounter();
     }
 
-    // معالج أزرار المتصفح (الرجوع والتقدم)
     function handlePopState(event) {
         const state = event.state;
-        if (state && state.page) {
-            navigate(state.page, false); // لا نضيف إلى history مرة أخرى
-        } else {
-            // إذا لم يكن هناك حالة، نحاول استرجاع الصفحة من localStorage
-            const lastPage = localStorage.getItem(STORAGE_CURRENT_PAGE) || 'home';
-            navigate(lastPage, false);
-        }
+        if (state && state.page) navigate(state.page, false);
+        else { const lastPage = localStorage.getItem(STORAGE_CURRENT_PAGE) || 'home'; navigate(lastPage, false); }
     }
 
-    // الدخول للأدمن من الضغط على اسم المتجر
-    function adminLoginFromBrand() {
-        if (isMobile) {
-            showToast('وضع الأدمن متاح فقط على الكمبيوتر', 'error');
-            return;
-        }
-        if (isAdmin) {
-            isAdmin = false;
-            localStorage.removeItem('isAdmin');
-            document.getElementById('adminPanelBtn').classList.add('hidden');
-            showToast('تم الخروج من وضع الأدمن');
-            if (document.getElementById('adminView').style.display !== 'none') navigate('home');
-        } else {
+    let shiftPressed = false;
+    function handleBrandClick(e) {
+        if (isMobile) return;
+        if (e.shiftKey) {
             const pwd = prompt('أدخل كلمة سر الأدمن:');
             if (pwd === ADMIN_PASSWORD) {
                 isAdmin = true;
                 localStorage.setItem('isAdmin', 'true');
-                showToast('تم الدخول كأدمن');
+                showToast('✅ تم الدخول كأدمن', 'success');
                 document.getElementById('adminPanelBtn').classList.remove('hidden');
-            } else {
-                showToast('كلمة سر خاطئة', 'error');
-            }
+                document.getElementById('logoutAdminBtn').classList.remove('hidden');
+                renderAllProducts();
+                if (document.getElementById('homeView').style.display !== 'none') startActiveUsersCounter();
+            } else if (pwd !== null) showToast('❌ كلمة سر خاطئة', 'error');
         }
+    }
+
+    function logoutAdmin() {
+        if (!isAdmin) return;
+        isAdmin = false;
+        localStorage.removeItem('isAdmin');
+        document.getElementById('adminPanelBtn').classList.add('hidden');
+        document.getElementById('logoutAdminBtn').classList.add('hidden');
+        showToast('تم الخروج من وضع الأدمن', 'success');
+        stopActiveUsersCounter();
+        renderAllProducts(); 
+        if (document.getElementById('adminView').style.display !== 'none') navigate('home');
     }
 
     function restorePage() {
         const lastPage = localStorage.getItem(STORAGE_CURRENT_PAGE) || 'home';
-        navigate(lastPage, true); // إضافة إلى history
+        navigate(lastPage, true);
+        if (isAdmin && !isMobile) {
+            document.getElementById('adminPanelBtn').classList.remove('hidden');
+            document.getElementById('logoutAdminBtn').classList.remove('hidden');
+        } else {
+            document.getElementById('adminPanelBtn').classList.add('hidden');
+            document.getElementById('logoutAdminBtn').classList.add('hidden');
+        }
     }
 
     function init() {
@@ -488,17 +717,23 @@
         renderCart();
         restorePage();
         setupImagePreviews();
-        document.getElementById('filterCat')?.addEventListener('change', () => refreshFilters());
-        document.getElementById('filterPrice')?.addEventListener('change', () => refreshFilters());
-        document.getElementById('searchInput')?.addEventListener('input', () => refreshFilters());
+        document.getElementById('filterCat')?.addEventListener('change', refreshFilters);
+        document.getElementById('filterPrice')?.addEventListener('change', refreshFilters);
+        document.getElementById('searchInput')?.addEventListener('input', refreshFilters);
         const brand = document.getElementById('brandName');
-        if (brand) brand.addEventListener('click', adminLoginFromBrand);
-        window.addEventListener('popstate', handlePopState);
+        if (brand) brand.addEventListener('click', handleBrandClick);
+        initDarkMode();
+        initTypingEffect();
+        initVoiceSearch();
+        if (isAdmin && document.getElementById('homeView').style.display !== 'none') startActiveUsersCounter();
     }
+
+    function detectMobile() { return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768; }
 
     window.app = {
         navigate, showDetail, addToCart, addToCartFromDetail, updateCartItem, removeCartItem,
-        nextImage, prevImage, sendWhatsApp, addProduct, deleteProduct
+        nextImage, prevImage, sendWhatsApp, addProduct, deleteProduct, logoutAdmin,
+        filterAndNavigate
     };
     window.app.updateCartItem = updateCartItem;
     window.app.removeCartItem = removeCartItem;
@@ -511,6 +746,8 @@
     window.app.deleteProduct = deleteProduct;
     window.app.navigate = navigate;
     window.app.addToCartFromDetail = addToCartFromDetail;
+    window.app.logoutAdmin = logoutAdmin;
+    window.app.filterAndNavigate = filterAndNavigate;
 
     init();
 </script>
