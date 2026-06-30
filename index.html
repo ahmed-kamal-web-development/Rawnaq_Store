@@ -2,7 +2,10 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover, maximum-scale=1.0">
+    <meta name="theme-color" content="#1e1b4b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>رونق - متجر قوائم المهام والمخططات</title>
     <script src="https://cdn.tailwindcss.com">
     </script>
@@ -17,76 +20,62 @@
             --border: #e2e8f0;
             --accent: #6366f1;
             --accent2: #8b5cf6;
-            --accent3: #a855f7;
             --success: #10b981;
             --danger: #ef4444;
-            --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-            --shadow-lg: 0 20px 40px -12px rgba(0, 0, 0, 0.12);
+            --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-lg: 0 20px 40px -12px rgba(0,0,0,0.12);
             --radius: 20px;
             --radius-sm: 12px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        body.dark-mode {
-            --bg: #0f172a;
-            --card: #1e293b;
-            --text: #f1f5f9;
-            --subtext: #94a3b8;
-            --border: #334155;
-            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-            --shadow-lg: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+            --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
         }
 
         body {
             font-family: 'Cairo', sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            transition: background-color 0.4s, color 0.4s;
-            overflow-x: hidden;
             scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
         }
 
-        /* شريط التنقل الزجاجي */
         .nav-glass {
-            background: rgba(30, 27, 75, 0.85);
+            background: rgba(30,27,75,0.92);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s;
-        }
-        body.dark-mode .nav-glass {
-            background: rgba(15, 23, 42, 0.9);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
         }
 
-        /* أزرار 3D محسنة */
         .btn-3d {
             position: relative;
             transition: all 0.1s ease;
-            box-shadow: 0 6px 0 #4338ca, 0 8px 20px rgba(99, 102, 241, 0.35);
+            box-shadow: 0 6px 0 #4338ca, 0 8px 20px rgba(99,102,241,0.35);
             transform: translateY(-3px);
             border-radius: 9999px;
             font-weight: 700;
             letter-spacing: 0.01em;
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 24px;
         }
         .btn-3d:active {
             transform: translateY(3px);
-            box-shadow: 0 2px 0 #4338ca, 0 4px 8px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 2px 0 #4338ca, 0 4px 8px rgba(99,102,241,0.2);
         }
         .btn-3d-green {
-            box-shadow: 0 6px 0 #059669, 0 8px 20px rgba(16, 185, 129, 0.35);
+            box-shadow: 0 6px 0 #059669, 0 8px 20px rgba(16,185,129,0.35);
         }
         .btn-3d-green:active {
-            box-shadow: 0 2px 0 #059669, 0 4px 8px rgba(16, 185, 129, 0.2);
+            box-shadow: 0 2px 0 #059669, 0 4px 8px rgba(16,185,129,0.2);
         }
 
-        /* بطاقات المنتجات */
         .product-card {
             background: var(--card);
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
             border: 1px solid var(--border);
             position: relative;
             opacity: 0;
@@ -116,63 +105,26 @@
         }
 
         @keyframes fadeUpCard {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* تأخيرات متتالية */
-        .product-card:nth-child(1) {
-            animation-delay: 0.05s;
-        }
-        .product-card:nth-child(2) {
-            animation-delay: 0.1s;
-        }
-        .product-card:nth-child(3) {
-            animation-delay: 0.15s;
-        }
-        .product-card:nth-child(4) {
-            animation-delay: 0.2s;
-        }
-        .product-card:nth-child(5) {
-            animation-delay: 0.25s;
-        }
-        .product-card:nth-child(6) {
-            animation-delay: 0.3s;
-        }
-        .product-card:nth-child(7) {
-            animation-delay: 0.35s;
-        }
-        .product-card:nth-child(8) {
-            animation-delay: 0.4s;
-        }
-        .product-card:nth-child(9) {
-            animation-delay: 0.45s;
-        }
-        .product-card:nth-child(10) {
-            animation-delay: 0.5s;
-        }
-        .product-card:nth-child(11) {
-            animation-delay: 0.55s;
-        }
-        .product-card:nth-child(12) {
-            animation-delay: 0.6s;
-        }
-        .product-card:nth-child(13) {
-            animation-delay: 0.65s;
-        }
-        .product-card:nth-child(14) {
-            animation-delay: 0.7s;
-        }
-        .product-card:nth-child(15) {
-            animation-delay: 0.75s;
-        }
-        .product-card:nth-child(16) {
-            animation-delay: 0.8s;
-        }
+        .product-card:nth-child(1) { animation-delay: 0.05s; }
+        .product-card:nth-child(2) { animation-delay: 0.1s; }
+        .product-card:nth-child(3) { animation-delay: 0.15s; }
+        .product-card:nth-child(4) { animation-delay: 0.2s; }
+        .product-card:nth-child(5) { animation-delay: 0.25s; }
+        .product-card:nth-child(6) { animation-delay: 0.3s; }
+        .product-card:nth-child(7) { animation-delay: 0.35s; }
+        .product-card:nth-child(8) { animation-delay: 0.4s; }
+        .product-card:nth-child(9) { animation-delay: 0.45s; }
+        .product-card:nth-child(10) { animation-delay: 0.5s; }
+        .product-card:nth-child(11) { animation-delay: 0.55s; }
+        .product-card:nth-child(12) { animation-delay: 0.6s; }
+        .product-card:nth-child(13) { animation-delay: 0.65s; }
+        .product-card:nth-child(14) { animation-delay: 0.7s; }
+        .product-card:nth-child(15) { animation-delay: 0.75s; }
+        .product-card:nth-child(16) { animation-delay: 0.8s; }
 
-        /* قسم الهيرو */
         .hero-gradient {
             background: linear-gradient(135deg, #1e1b4b 0%, #312e81 30%, #4c1d95 60%, #5b21b6 100%);
             position: relative;
@@ -181,59 +133,50 @@
         .hero-gradient::before {
             content: '';
             position: absolute;
-            width: 400px;
-            height: 400px;
+            width: 300px;
+            height: 300px;
             border-radius: 50%;
-            background: rgba(139, 92, 246, 0.25);
-            top: -100px;
-            left: -100px;
+            background: rgba(139,92,246,0.25);
+            top: -80px;
+            left: -80px;
             animation: floatBlob 8s ease-in-out infinite;
         }
         .hero-gradient::after {
             content: '';
             position: absolute;
-            width: 300px;
-            height: 300px;
+            width: 250px;
+            height: 250px;
             border-radius: 50%;
-            background: rgba(99, 102, 241, 0.2);
-            bottom: -80px;
-            right: -60px;
+            background: rgba(99,102,241,0.2);
+            bottom: -60px;
+            right: -50px;
             animation: floatBlob 10s ease-in-out infinite reverse;
         }
         @keyframes floatBlob {
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
-            33% {
-                transform: translate(30px, -20px) scale(1.1);
-            }
-            66% {
-                transform: translate(-15px, 25px) scale(0.9);
-            }
+            0%,100% { transform: translate(0,0) scale(1); }
+            33% { transform: translate(20px,-15px) scale(1.1); }
+            66% { transform: translate(-10px,20px) scale(0.9); }
         }
 
-        /* أيقونات التواصل */
         .social-icon {
             transition: all 0.3s;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 56px;
-            height: 56px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
-            background: var(--card);
-            box-shadow: var(--shadow);
-            font-size: 1.5rem;
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            font-size: 1.4rem;
         }
         .social-icon:hover {
-            transform: translateY(-6px) scale(1.1);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
-        /* معرض الصور في التفاصيل */
         .gallery-arrow {
-            background: rgba(0, 0, 0, 0.55);
+            background: rgba(0,0,0,0.55);
             backdrop-filter: blur(8px);
             border-radius: 50%;
             width: 44px;
@@ -251,8 +194,7 @@
             z-index: 5;
         }
         .gallery-arrow:hover {
-            background: rgba(0, 0, 0, 0.75);
-            transform: translateY(-50%) scale(1.1);
+            background: rgba(0,0,0,0.75);
         }
 
         .view {
@@ -260,17 +202,10 @@
             animation: fadeView 0.35s ease-out;
         }
         @keyframes fadeView {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* صندوق البحث */
         .search-wrapper {
             position: relative;
             transition: all 0.3s;
@@ -290,25 +225,18 @@
             color: #94a3b8;
             transition: all 0.3s;
             z-index: 3;
+            -webkit-tap-highlight-color: transparent;
         }
-        .voice-btn:hover {
-            color: #6366f1;
-        }
+        .voice-btn:hover { color: #6366f1; }
         .voice-btn.listening {
             color: #ef4444;
             animation: pulseMic 0.8s infinite;
         }
         @keyframes pulseMic {
-            0%,
-            100% {
-                transform: translateY(-50%) scale(1);
-            }
-            50% {
-                transform: translateY(-50%) scale(1.3);
-            }
+            0%,100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.3); }
         }
 
-        /* إشعار التوست */
         .toast-notification {
             position: fixed;
             bottom: 30px;
@@ -324,24 +252,19 @@
             z-index: 9999;
             direction: rtl;
             opacity: 0;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
             pointer-events: none;
             font-weight: 600;
             font-size: 0.95rem;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
         }
         .toast-notification.show {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
-        .toast-notification.success {
-            background: #10b981;
-        }
-        .toast-notification.error {
-            background: #ef4444;
-        }
+        .toast-notification.success { background: #10b981; }
+        .toast-notification.error { background: #ef4444; }
 
-        /* كونفيتي */
         .confetti-particle {
             position: fixed;
             z-index: 10000;
@@ -349,112 +272,76 @@
             animation: confettiFall 0.9s ease-out forwards;
         }
         @keyframes confettiFall {
-            0% {
-                opacity: 1;
-                transform: translateY(0) rotate(0deg) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(120px) rotate(360deg) scale(0.3);
-            }
+            0% { opacity:1; transform: translateY(0) rotate(0deg) scale(1); }
+            100% { opacity:0; transform: translateY(120px) rotate(360deg) scale(0.3); }
         }
 
-        /* شريط تمرير مخصص */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
-        body.dark-mode ::-webkit-scrollbar-thumb {
-            background: #475569;
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
-        /* بطاقة الفئة */
         .category-card {
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
             border: 2px solid transparent;
+            -webkit-tap-highlight-color: transparent;
         }
         .category-card:hover {
             transform: translateY(-8px);
             border-color: #6366f1;
-            box-shadow: 0 25px 35px -10px rgba(99, 102, 241, 0.25);
+            box-shadow: 0 25px 35px -10px rgba(99,102,241,0.25);
         }
 
-        /* تأثير نبض للسلة */
         @keyframes cartBounce {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            25% {
-                transform: scale(1.3);
-            }
-            50% {
-                transform: scale(0.9);
-            }
-            75% {
-                transform: scale(1.15);
-            }
+            0%,100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(0.9); }
+            75% { transform: scale(1.15); }
         }
-        .cart-bounce {
-            animation: cartBounce 0.5s ease;
-        }
+        .cart-bounce { animation: cartBounce 0.5s ease; }
 
+        /* تحسينات خاصة بالموبايل */
         @media (max-width: 768px) {
             .hero-gradient h1 {
                 font-size: 1.8rem;
             }
             .product-card {
-                border-radius: 16px;
+                border-radius: 18px;
             }
             .container {
-                padding-left: 10px;
-                padding-right: 10px;
+                padding-left: 12px;
+                padding-right: 12px;
             }
-        }
-
-        /* شريط تقدم قراءة الصفحة */
-        #pageProgressBar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
-            z-index: 9999;
-            transition: width 0.15s linear;
-            border-radius: 0 2px 2px 0;
+            .nav-btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.8rem;
+            }
+            .btn-3d {
+                min-height: 52px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body class="bg-gray-50">
 
-    <!-- شريط تقدم الصفحة -->
-    <div id="pageProgressBar" style="width:0%"></div>
-
-    <!-- الشريط العلوي -->
-    <nav class="nav-glass text-white sticky top-0 z-50">
+    <!-- شريط التنقل العلوي -->
+    <nav class="nav-glass text-white sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
             <div id="brandName" class="text-2xl font-extrabold cursor-pointer select-none tracking-tight" style="font-family:'El Messiri',sans-serif;">
                 ✦ رونق
             </div>
-            <div class="flex gap-3 items-center flex-wrap">
-                <button onclick="app.navigate('home')" class="nav-btn hover:bg-white/15 px-4 py-2 rounded-full transition font-semibold text-sm">
+            <div class="flex gap-2 sm:gap-3 items-center flex-wrap">
+                <button onclick="app.navigate('home')" class="nav-btn hover:bg-white/15 px-3 sm:px-4 py-2 rounded-full transition font-semibold text-sm">
                     🏠 الرئيسية
                 </button>
-                <button onclick="app.navigate('products')" class="nav-btn hover:bg-white/15 px-4 py-2 rounded-full transition font-semibold text-sm">
+                <button onclick="app.navigate('products')" class="nav-btn hover:bg-white/15 px-3 sm:px-4 py-2 rounded-full transition font-semibold text-sm">
                     🛍️ المنتجات
                 </button>
-                <button onclick="app.navigate('cart')" class="nav-btn relative hover:bg-white/15 px-4 py-2 rounded-full transition font-semibold text-sm" id="cartNavBtn">
+                <button onclick="app.navigate('cart')" class="nav-btn relative hover:bg-white/15 px-3 sm:px-4 py-2 rounded-full transition font-semibold text-sm" id="cartNavBtn">
                     🛒 السلة
                     <span id="cartCount" class="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold shadow-lg">0</span>
                 </button>
-                <button id="darkModeToggle" class="bg-white/15 hover:bg-white/25 px-3 py-2 rounded-full transition text-lg" title="الوضع المظلم">🌙</button>
             </div>
         </div>
     </nav>
@@ -464,18 +351,17 @@
 
         <!-- الرئيسية -->
         <div id="homeView" class="view">
-            <!-- هيرو -->
-            <div class="hero-gradient rounded-3xl text-white p-8 md:p-12 mb-10 text-center relative overflow-hidden shadow-2xl">
+            <div class="hero-gradient rounded-3xl text-white p-6 sm:p-8 md:p-12 mb-10 text-center relative overflow-hidden shadow-2xl">
                 <div class="relative z-10">
                     <span class="inline-block bg-white/20 backdrop-blur px-4 py-1 rounded-full text-sm mb-4 font-semibold tracking-wide">✨ الأكثر مبيعاً في مصر</span>
-                    <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight" style="font-family:'El Messiri',sans-serif;">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-3 leading-tight" style="font-family:'El Messiri',sans-serif;">
                         نظّم حياتك مع <span class="text-yellow-300">رونق</span>
                     </h1>
-                    <p class="text-lg md:text-xl opacity-90 mb-6 max-w-xl mx-auto">أفضل قوائم المهام والمخططات اليومية والشهرية بتصاميم أنيقة وجودة عالية</p>
+                    <p class="text-base sm:text-lg md:text-xl opacity-90 mb-6 max-w-xl mx-auto">أفضل قوائم المهام والمخططات اليومية والشهرية بتصاميم أنيقة وجودة عالية</p>
                     <button onclick="app.navigate('products')" class="bg-white text-indigo-800 px-8 py-3 rounded-full font-extrabold text-lg btn-3d shadow-xl hover:shadow-2xl transition">
                         🚀 تسوق الآن
                     </button>
-                    <div class="flex justify-center gap-6 mt-6 text-sm opacity-80">
+                    <div class="flex justify-center gap-4 sm:gap-6 mt-6 text-sm opacity-80 flex-wrap">
                         <span><i class="fas fa-truck-fast ml-1"></i> توصيل سريع</span>
                         <span><i class="fas fa-shield-check ml-1"></i> جودة مضمونة</span>
                         <span><i class="fas fa-headset ml-1"></i> دعم متواصل</span>
@@ -483,35 +369,35 @@
                 </div>
             </div>
 
-            <!-- فئات -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <div class="category-card bg-white dark:bg-slate-800 rounded-2xl shadow-md p-7 text-center border-2 border-transparent" onclick="app.filterAndNavigate('todolists')">
-                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/40 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">📋</div>
+            <!-- فئات المنتجات -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10">
+                <div class="category-card bg-white rounded-2xl shadow-md p-6 text-center border-2 border-transparent" onclick="app.filterAndNavigate('todolists')">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">📋</div>
                     <h3 class="text-xl font-bold mb-1">قوائم المهام</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">دفاتر ومفكرات يومية</p>
+                    <p class="text-sm text-gray-500">دفاتر ومفكرات يومية</p>
                 </div>
-                <div class="category-card bg-white dark:bg-slate-800 rounded-2xl shadow-md p-7 text-center border-2 border-transparent" onclick="app.filterAndNavigate('planners')">
-                    <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/40 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">📅</div>
+                <div class="category-card bg-white rounded-2xl shadow-md p-6 text-center border-2 border-transparent" onclick="app.filterAndNavigate('planners')">
+                    <div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">📅</div>
                     <h3 class="text-xl font-bold mb-1">مخططات شهرية</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">لوحات ومخططات حائطية</p>
+                    <p class="text-sm text-gray-500">لوحات ومخططات حائطية</p>
                 </div>
-                <div class="category-card bg-white dark:bg-slate-800 rounded-2xl shadow-md p-7 text-center border-2 border-transparent" onclick="app.filterAndNavigate('others')">
-                    <div class="w-16 h-16 bg-amber-100 dark:bg-amber-900/40 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">✨</div>
+                <div class="category-card bg-white rounded-2xl shadow-md p-6 text-center border-2 border-transparent" onclick="app.filterAndNavigate('others')">
+                    <div class="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">✨</div>
                     <h3 class="text-xl font-bold mb-1">إكسسوارات</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">أقلام وملصقات وأدوات</p>
+                    <p class="text-sm text-gray-500">أقلام وملصقات وأدوات</p>
                 </div>
             </div>
 
-            <!-- مميزات -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
-                <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 text-center shadow-sm"><i class="fas fa-truck text-2xl text-indigo-500 mb-2"></i><p class="font-bold text-sm">توصيل لجميع المحافظات</p></div>
-                <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 text-center shadow-sm"><i class="fas fa-lock text-2xl text-indigo-500 mb-2"></i><p class="font-bold text-sm">دفع آمن عند الاستلام</p></div>
-                <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 text-center shadow-sm"><i class="fas fa-star text-2xl text-indigo-500 mb-2"></i><p class="font-bold text-sm">+5000 عميل سعيد</p></div>
-                <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 text-center shadow-sm"><i class="fas fa-undo text-2xl text-indigo-500 mb-2"></i><p class="font-bold text-sm">إرجاع خلال 14 يوم</p></div>
+            <!-- مميزات المتجر -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-10">
+                <div class="bg-white rounded-2xl p-4 sm:p-5 text-center shadow-sm"><i class="fas fa-truck text-2xl text-indigo-500 mb-2"></i><p class="font-bold text-xs sm:text-sm">توصيل سريع</p></div>
+                <div class="bg-white rounded-2xl p-4 sm:p-5 text-center shadow-sm"><i class="fas fa-lock text-2xl text-indigo-500 mb-2"></i><p class="font-bold text-xs sm:text-sm">دفع آمن</p></div>
+                <div class="bg-white rounded-2xl p-4 sm:p-5 text-center shadow-sm"><i class="fas fa-star text-2xl text-indigo-500 mb-2"></i><p class="font-bold text-xs sm:text-sm">+5000 عميل</p></div>
+                <div class="bg-white rounded-2xl p-4 sm:p-5 text-center shadow-sm"><i class="fas fa-undo text-2xl text-indigo-500 mb-2"></i><p class="font-bold text-xs sm:text-sm">ضمان 14 يوم</p></div>
             </div>
 
-            <!-- تواصل اجتماعي -->
-            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-sm">
+            <!-- وسائل التواصل الاجتماعي -->
+            <div class="bg-white rounded-2xl p-6 text-center shadow-sm">
                 <h3 class="font-bold text-lg mb-4">📲 تابعنا على</h3>
                 <div class="flex justify-center gap-6">
                     <a href="https://www.facebook.com/profile.php?id=61556868793384" target="_blank" class="social-icon text-blue-600" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
@@ -521,68 +407,68 @@
             </div>
         </div>
 
-        <!-- المنتجات -->
+        <!-- صفحة المنتجات -->
         <div id="productsView" class="view">
             <div class="flex flex-wrap gap-3 mb-5">
-                <select id="filterCat" class="border-2 border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 rounded-xl px-4 py-3 text-sm font-semibold focus:ring-2 focus:ring-indigo-400 outline-none transition">
+                <select id="filterCat" class="flex-1 min-w-[140px] border-2 border-gray-200 bg-white rounded-xl px-4 py-3 text-sm font-semibold focus:ring-2 focus:ring-indigo-400 outline-none transition">
                     <option value="all">📦 كل التصنيفات</option>
                     <option value="todolists">📋 قوائم المهام</option>
                     <option value="planners">📅 مخططات شهرية</option>
                     <option value="others">✨ إكسسوارات</option>
                 </select>
-                <select id="filterPrice" class="border-2 border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 rounded-xl px-4 py-3 text-sm font-semibold focus:ring-2 focus:ring-indigo-400 outline-none transition">
+                <select id="filterPrice" class="flex-1 min-w-[140px] border-2 border-gray-200 bg-white rounded-xl px-4 py-3 text-sm font-semibold focus:ring-2 focus:ring-indigo-400 outline-none transition">
                     <option value="">🔃 ترتيب السعر</option>
                     <option value="low">⬆️ الأقل سعراً</option>
                     <option value="high">⬇️ الأعلى سعراً</option>
                 </select>
             </div>
-            <div class="mb-6 relative max-w-lg search-wrapper">
+            <div class="mb-6 relative search-wrapper">
                 <i class="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
-                <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج..." class="w-full pr-11 pl-14 py-3.5 border-2 border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 rounded-2xl text-base focus:ring-2 focus:ring-indigo-400 outline-none transition shadow-sm">
+                <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج..." class="w-full pr-11 pl-14 py-3.5 border-2 border-gray-200 bg-white rounded-2xl text-base focus:ring-2 focus:ring-indigo-400 outline-none transition shadow-sm">
                 <button id="voiceSearchBtn" class="voice-btn" title="بحث صوتي"><i class="fas fa-microphone"></i></button>
             </div>
             <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"></div>
         </div>
 
-        <!-- تفاصيل المنتج -->
+        <!-- صفحة تفاصيل المنتج -->
         <div id="detailView" class="view">
-            <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl p-6 relative max-w-3xl mx-auto">
-                <button onclick="app.navigate('products')" class="mb-4 text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">
+            <div class="bg-white rounded-3xl shadow-xl p-6 relative max-w-3xl mx-auto">
+                <button onclick="app.navigate('products')" class="mb-4 text-indigo-600 font-semibold hover:underline text-sm">
                     ← العودة للمنتجات
                 </button>
-                <div class="relative overflow-hidden rounded-2xl mb-5 bg-gray-100 dark:bg-slate-700">
-                    <img id="detailImg" class="w-full max-h-[450px] object-contain rounded-2xl transition-all duration-500">
+                <div class="relative overflow-hidden rounded-2xl mb-5 bg-gray-100">
+                    <img id="detailImg" class="w-full max-h-[350px] sm:max-h-[450px] object-contain rounded-2xl transition-all duration-500">
                     <button id="prevBtn" onclick="app.prevImage()" class="gallery-arrow left-3">❮</button>
                     <button id="nextBtn" onclick="app.nextImage()" class="gallery-arrow right-3">❯</button>
                 </div>
-                <span id="detailCatBadge" class="inline-block bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full text-xs font-bold mb-2"></span>
-                <h2 id="detailName" class="text-3xl font-extrabold mb-1"></h2>
-                <p id="detailPrice" class="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 mb-3"></p>
-                <p id="detailDesc" class="text-gray-600 dark:text-gray-300 leading-relaxed"></p>
-                <button onclick="app.addToCartFromDetail()" class="mt-5 w-full bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3.5 rounded-full font-extrabold text-lg btn-3d transition">
+                <span id="detailCatBadge" class="inline-block bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold mb-2"></span>
+                <h2 id="detailName" class="text-2xl sm:text-3xl font-extrabold mb-1"></h2>
+                <p id="detailPrice" class="text-2xl font-extrabold text-emerald-600 mb-3"></p>
+                <p id="detailDesc" class="text-gray-600 leading-relaxed"></p>
+                <button onclick="app.addToCartFromDetail()" class="mt-5 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3.5 rounded-full font-extrabold text-lg btn-3d transition">
                     ➕ أضف إلى السلة
                 </button>
             </div>
         </div>
 
-        <!-- السلة -->
+        <!-- صفحة السلة -->
         <div id="cartView" class="view">
             <h2 class="text-2xl font-extrabold mb-5">🛒 سلة المشتريات</h2>
-            <div id="cartItems" class="bg-white dark:bg-slate-800 rounded-2xl shadow-md p-5"></div>
-            <div class="mt-5 text-left bg-white dark:bg-slate-800 rounded-2xl shadow-md p-5">
-                <p class="text-xl font-bold">الإجمالي: <span id="cartTotal" class="text-emerald-600 dark:text-emerald-400">0</span> ج.م</p>
+            <div id="cartItems" class="bg-white rounded-2xl shadow-md p-5"></div>
+            <div class="mt-5 bg-white rounded-2xl shadow-md p-5">
+                <p class="text-xl font-bold">الإجمالي: <span id="cartTotal" class="text-emerald-600">0</span> ج.م</p>
                 <button onclick="app.navigate('checkout')" class="mt-3 bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-full font-extrabold btn-3d btn-3d-green transition w-full sm:w-auto">
                     💳 إتمام الشراء
                 </button>
             </div>
         </div>
 
-        <!-- إتمام الشراء -->
+        <!-- صفحة إتمام الشراء -->
         <div id="checkoutView" class="view">
-            <div class="bg-white dark:bg-slate-800 p-7 rounded-3xl shadow-xl max-w-lg mx-auto">
+            <div class="bg-white p-7 rounded-3xl shadow-xl max-w-lg mx-auto">
                 <h2 class="text-2xl font-extrabold mb-5">📦 بيانات الشحن</h2>
-                <input id="custName" placeholder="الاسم الكامل" class="w-full border-2 border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-700 rounded-xl p-3 mb-4 focus:ring-2 focus:ring-indigo-400 outline-none transition">
-                <textarea id="custAddress" placeholder="العنوان التفصيلي (المحافظة - المدينة - الشارع)" rows="3" class="w-full border-2 border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-700 rounded-xl p-3 mb-4 focus:ring-2 focus:ring-indigo-400 outline-none transition"></textarea>
+                <input id="custName" placeholder="الاسم الكامل" class="w-full border-2 border-gray-200 bg-white rounded-xl p-3 mb-4 focus:ring-2 focus:ring-indigo-400 outline-none transition">
+                <textarea id="custAddress" placeholder="العنوان التفصيلي (المحافظة - المدينة - الشارع)" rows="3" class="w-full border-2 border-gray-200 bg-white rounded-xl p-3 mb-4 focus:ring-2 focus:ring-indigo-400 outline-none transition"></textarea>
                 <button onclick="app.sendWhatsApp()" class="bg-green-600 hover:bg-green-700 text-white w-full py-3.5 rounded-xl text-lg font-extrabold btn-3d btn-3d-green transition">
                     ✅ إرسال الطلب عبر واتساب
                 </button>
@@ -590,119 +476,70 @@
         </div>
     </div>
 
-    <!-- حاوية الإشعارات -->
+    <!-- حاوية الإشعارات المنبثقة -->
     <div id="toastContainer"></div>
 
     <!-- فوتر -->
-    <footer class="text-center py-6 text-gray-500 dark:text-gray-500 text-sm border-t border-gray-200 dark:border-slate-700 mt-10">
+    <footer class="text-center py-6 text-gray-500 text-sm border-t border-gray-200 mt-10">
         <p>© 2026 <strong>رونق</strong> - جميع الحقوق محفوظة | صنع بكل ❤️ في مصر</p>
     </footer>
 
+    <!-- ======================== JavaScript ======================== -->
     <script>
-        // ========== التخزين ==========
+        // إعدادات التخزين المحلي
         const STORAGE_PRODUCTS = 'rawnaq_products_v2';
         const STORAGE_CART = 'rawnaq_cart_v2';
         const STORAGE_CURRENT_PAGE = 'rawnaq_current_page';
-        const STORAGE_DARK_MODE = 'rawnaq_dark_mode';
 
-        // منتجات افتراضية بصور متنوعة وجميلة
+
+
+
+
+        // ===== قائمة المنتجات (يمكنك إضافة منتجاتك هنا) =====
         const defaultProducts = [
-            { id: 'p1', name: 'مفكرة قائمة المهام اليومية', price: 45, category: 'todolists',
-                description: 'دفتر صغير بتصميم أنيق يحتوي على 50 ورقة من الورق الفاخر، مثالي للاستخدام اليومي وتنظيم أولوياتك.',
-                imageUrl: 'https://picsum.photos/id/20/500/400', images: ['https://picsum.photos/id/20/500/400',
-                    'https://picsum.photos/id/21/500/400', 'https://picsum.photos/id/26/500/400'
-                ] },
-            { id: 'p2', name: 'لوحة مغناطيسية للتخطيط الأسبوعي', price: 120, category: 'planners',
-                description: 'لوحة بيضاء مغناطيسية بحجم A3 مع قلم ماركر وممحاة، رائعة للمكتب والمنزل.',
-                imageUrl: 'https://picsum.photos/id/40/500/400', images: ['https://picsum.photos/id/40/500/400',
-                    'https://picsum.photos/id/41/500/400', 'https://picsum.photos/id/42/500/400'
-                ] },
-            { id: 'p3', name: 'مجموعة ملصقات تنظيمية ملونة', price: 25, category: 'others',
-                description: 'مجموعة من 100 ملصق لاصق بألوان وأشكال متعددة لتحديد الأولويات والملاحظات.',
-                imageUrl: 'https://picsum.photos/id/30/500/400', images: ['https://picsum.photos/id/30/500/400',
-                    'https://picsum.photos/id/31/500/400'
-                ] },
-            { id: 'p4', name: 'مخطط شهري حائطي كبير', price: 85, category: 'planners',
-                description: 'مخطط حجم كبير 70×100 سم بتصميم عصري، يساعدك على رؤية الشهر كاملاً بوضوح.',
-                imageUrl: 'https://picsum.photos/id/50/500/400', images: ['https://picsum.photos/id/50/500/400',
-                    'https://picsum.photos/id/51/500/400'
-                ] },
-            { id: 'p5', name: 'دفتر قوائم التسوق الذكي', price: 30, category: 'todolists',
-                description: 'دفتر صغير مع مقسمات مدمجة لقائمة المشتريات، مثالي للتسوق الأسبوعي.',
-                imageUrl: 'https://picsum.photos/id/60/500/400', images: ['https://picsum.photos/id/60/500/400',
-                    'https://picsum.photos/id/61/500/400'
-                ] },
-            { id: 'p6', name: 'حامل هاتف مع لوحة تخطيط', price: 95, category: 'planners',
-                description: 'حامل أكريليك شفاف يجمع بين حامل الهاتف ولوحة تخطيط أسبوعية أنيقة.',
-                imageUrl: 'https://picsum.photos/id/70/500/400', images: ['https://picsum.photos/id/70/500/400',
-                    'https://picsum.photos/id/71/500/400'
-                ] },
-            { id: 'p7', name: 'طقم أقمار تحديد قابلة للمسح', price: 40, category: 'others',
-                description: '5 أقلام تحديد بألوان زاهية قابلة للمسح، مثالية للوحات البيضاء والورق.',
-                imageUrl: 'https://picsum.photos/id/80/500/400', images: ['https://picsum.photos/id/80/500/400',
-                    'https://picsum.photos/id/81/500/400'
-                ] },
-            { id: 'p8', name: 'مفكرة أهداف ذكية 90 يوم', price: 65, category: 'todolists',
-                description: 'مفكرة بتصميم فريد لتتبع الأهداف اليومية والإنجازات لمدة 90 يوماً.',
-                imageUrl: 'https://picsum.photos/id/90/500/400', images: ['https://picsum.photos/id/90/500/400',
-                    'https://picsum.photos/id/91/500/400'
-                ] },
-            { id: 'p9', name: 'باكج تنظيمي شامل', price: 150, category: 'todolists',
-                description: 'حزمة متكاملة تحتوي على مفكرة يومية، قلم، وملصقات تحفيزية في علبة هدايا.',
-                imageUrl: 'https://picsum.photos/id/100/500/400', images: ['https://picsum.photos/id/100/500/400',
-                    'https://picsum.photos/id/101/500/400'
-                ] },
-            { id: 'p10', name: 'دفتر تتبع العادات اليومية', price: 55, category: 'planners',
-                description: 'دفتر أنيق لمتابعة العادات اليومية لمدة 66 يوماً مع رسوم بيانية تحفيزية.',
-                imageUrl: 'https://picsum.photos/id/110/500/400', images: ['https://picsum.photos/id/110/500/400',
-                    'https://picsum.photos/id/111/500/400'
-                ] },
-            { id: 'p11', name: 'مجموعة ملصقات تحفيزية', price: 35, category: 'others',
-                description: '20 ملصقاً تحفيزياً بتصاميم ملهمة لتزيين مكتبك ودفترك.',
-                imageUrl: 'https://picsum.photos/id/120/500/400', images: ['https://picsum.photos/id/120/500/400',
-                    'https://picsum.photos/id/121/500/400'
-                ] },
-            { id: 'p12', name: 'لوحة تنظيم المهام المنزلية', price: 110, category: 'planners',
-                description: 'لوحة خشبية عصرية لتنظيم الأعمال المنزلية اليومية والأسبوعية لكل أفراد الأسرة.',
-                imageUrl: 'https://picsum.photos/id/130/500/400', images: ['https://picsum.photos/id/130/500/400',
-                    'https://picsum.photos/id/131/500/400'
-                ] },
-            { id: 'p13', name: 'ساعة رملية إنتاجية 30 دقيقة', price: 75, category: 'others',
-                description: 'ساعة رملية زجاجية أنيقة بتقنية بومودورو لتعزيز التركيز والإنتاجية.',
-                imageUrl: 'https://picsum.photos/id/140/500/400', images: ['https://picsum.photos/id/140/500/400',
-                    'https://picsum.photos/id/141/500/400'
-                ] },
-            { id: 'p14', name: 'دفتر الأولويات الأسبوعي', price: 48, category: 'todolists',
-                description: 'دفتر صغير بحجم الجيب لتحديد أولويات الأسبوع مع نظام ترميز لوني.',
-                imageUrl: 'https://picsum.photos/id/150/500/400', images: ['https://picsum.photos/id/150/500/400',
-                    'https://picsum.photos/id/151/500/400'
-                ] },
-            { id: 'p15', name: 'مخطط رقمي PDF قابل للطباعة', price: 25, category: 'planners',
-                description: 'ملف PDF احترافي يحتوي على 12 قالباً مختلفاً للطباعة والاستخدام الفوري.',
-                imageUrl: 'https://picsum.photos/id/160/500/400', images: ['https://picsum.photos/id/160/500/400',
-                    'https://picsum.photos/id/161/500/400'
-                ] }
+            { id: 'p1', name: 'مفكرة قائمة المهام اليومية', price: 45, category: 'todolists', description: 'دفتر صغير بتصميم أنيق يحتوي على 50 ورقة من الورق الفاخر، مثالي للاستخدام اليومي وتنظيم أولوياتك.', imageUrl: 'https://picsum.photos/id/20/500/400', images: ['https://picsum.photos/id/20/500/400','https://picsum.photos/id/21/500/400','https://picsum.photos/id/26/500/400'] },
+            { id: 'p2', name: 'لوحة مغناطيسية للتخطيط الأسبوعي', price: 120, category: 'planners', description: 'لوحة بيضاء مغناطيسية بحجم A3 مع قلم ماركر وممحاة، رائعة للمكتب والمنزل.', imageUrl: 'https://picsum.photos/id/40/500/400', images: ['https://picsum.photos/id/40/500/400','https://picsum.photos/id/41/500/400','https://picsum.photos/id/42/500/400'] },
+            { id: 'p3', name: 'مجموعة ملصقات تنظيمية ملونة', price: 25, category: 'others', description: 'مجموعة من 100 ملصق لاصق بألوان وأشكال متعددة لتحديد الأولويات والملاحظات.', imageUrl: 'https://picsum.photos/id/30/500/400', images: ['https://picsum.photos/id/30/500/400','https://picsum.photos/id/31/500/400'] },
+            { id: 'p4', name: 'مخطط شهري حائطي كبير', price: 85, category: 'planners', description: 'مخطط حجم كبير 70×100 سم بتصميم عصري، يساعدك على رؤية الشهر كاملاً بوضوح.', imageUrl: 'https://picsum.photos/id/50/500/400', images: ['https://picsum.photos/id/50/500/400','https://picsum.photos/id/51/500/400'] },
+            { id: 'p5', name: 'دفتر قوائم التسوق الذكي', price: 30, category: 'todolists', description: 'دفتر صغير مع مقسمات مدمجة لقائمة المشتريات، مثالي للتسوق الأسبوعي.', imageUrl: 'https://picsum.photos/id/60/500/400', images: ['https://picsum.photos/id/60/500/400','https://picsum.photos/id/61/500/400'] },
+            { id: 'p6', name: 'حامل هاتف مع لوحة تخطيط', price: 95, category: 'planners', description: 'حامل أكريليك شفاف يجمع بين حامل الهاتف ولوحة تخطيط أسبوعية أنيقة.', imageUrl: 'https://picsum.photos/id/70/500/400', images: ['https://picsum.photos/id/70/500/400','https://picsum.photos/id/71/500/400'] },
+            { id: 'p7', name: 'طقم أقلام تحديد قابلة للمسح', price: 40, category: 'others', description: '5 أقلام تحديد بألوان زاهية قابلة للمسح، مثالية للوحات البيضاء والورق.', imageUrl: 'https://picsum.photos/id/80/500/400', images: ['https://picsum.photos/id/80/500/400','https://picsum.photos/id/81/500/400'] },
+            { id: 'p8', name: 'مفكرة أهداف ذكية 90 يوم', price: 65, category: 'todolists', description: 'مفكرة بتصميم فريد لتتبع الأهداف اليومية والإنجازات لمدة 90 يوماً.', imageUrl: 'https://picsum.photos/id/90/500/400', images: ['https://picsum.photos/id/90/500/400','https://picsum.photos/id/91/500/400'] },
+            { id: 'p9', name: 'باكج تنظيمي شامل', price: 150, category: 'todolists', description: 'حزمة متكاملة تحتوي على مفكرة يومية، قلم، وملصقات تحفيزية في علبة هدايا.', imageUrl: 'https://picsum.photos/id/100/500/400', images: ['https://picsum.photos/id/100/500/400','https://picsum.photos/id/101/500/400'] },
+            { id: 'p10', name: 'دفتر تتبع العادات اليومية', price: 55, category: 'planners', description: 'دفتر أنيق لمتابعة العادات اليومية لمدة 66 يوماً مع رسوم بيانية تحفيزية.', imageUrl: 'https://picsum.photos/id/110/500/400', images: ['https://picsum.photos/id/110/500/400','https://picsum.photos/id/111/500/400'] },
+            { id: 'p11', name: 'مجموعة ملصقات تحفيزية', price: 35, category: 'others', description: '20 ملصقاً تحفيزياً بتصاميم ملهمة لتزيين مكتبك ودفترك.', imageUrl: 'https://picsum.photos/id/120/500/400', images: ['https://picsum.photos/id/120/500/400','https://picsum.photos/id/121/500/400'] },
+            { id: 'p12', name: 'لوحة تنظيم المهام المنزلية', price: 110, category: 'planners', description: 'لوحة خشبية عصرية لتنظيم الأعمال المنزلية اليومية والأسبوعية لكل أفراد الأسرة.', imageUrl: 'https://picsum.photos/id/130/500/400', images: ['https://picsum.photos/id/130/500/400','https://picsum.photos/id/131/500/400'] },
+            { id: 'p13', name: 'ساعة رملية إنتاجية 30 دقيقة', price: 75, category: 'others', description: 'ساعة رملية زجاجية أنيقة بتقنية بومودورو لتعزيز التركيز والإنتاجية.', imageUrl: 'https://picsum.photos/id/140/500/400', images: ['https://picsum.photos/id/140/500/400','https://picsum.photos/id/141/500/400'] },
+            { id: 'p14', name: 'دفتر الأولويات الأسبوعي', price: 48, category: 'todolists', description: 'دفتر صغير بحجم الجيب لتحديد أولويات الأسبوع مع نظام ترميز لوني.', imageUrl: 'https://picsum.photos/id/150/500/400', images: ['https://picsum.photos/id/150/500/400','https://picsum.photos/id/151/500/400'] },
+            { id: 'p15', name: 'مخطط رقمي PDF قابل للطباعة', price: 25, category: 'planners', description: 'ملف PDF احترافي يحتوي على 12 قالباً مختلفاً للطباعة والاستخدام الفوري.', imageUrl: 'https://picsum.photos/id/160/500/400', images: ['https://picsum.photos/id/160/500/400','https://picsum.photos/id/161/500/400'] }
         ];
 
+
+
+
+
+        // المتغيرات العامة
         let products = [],
             cart = [],
             currentDetailProduct = null,
             currentImages = [],
-            currentImageIndex = 0,
-            recognition = null,
+            currentImageIndex = 0;
+        let recognition = null,
             isListening = false;
 
-        // ========== دوال مساعدة ==========
+        // ---- دوال المساعدة ----
         function showToast(msg, type = 'success') {
             const cont = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = `toast-notification ${type}`;
             toast.innerHTML =
-                `${type==='success' ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-exclamation-triangle"></i>'} <span>${msg}</span>`;
+                `${type === 'success' ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-exclamation-triangle"></i>'} <span>${msg}</span>`;
             cont.appendChild(toast);
             requestAnimationFrame(() => toast.classList.add('show'));
-            setTimeout(() => { toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 350); }, 3000);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 350);
+            }, 3000);
         }
 
         function spawnConfetti(x, y) {
@@ -717,12 +554,14 @@
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
                 particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
                 particle.style.animationDuration = (0.6 + Math.random() * 0.8) + 's';
-                particle.style.transform = `translate(${(Math.random()-0.5)*120}px, ${-Math.random()*100}px) rotate(${Math.random()*360}deg)`;
+                particle.style.transform =
+                    `translate(${(Math.random() - 0.5) * 120}px, ${-Math.random() * 100}px) rotate(${Math.random() * 360}deg)`;
                 document.body.appendChild(particle);
                 setTimeout(() => particle.remove(), 1000);
             }
         }
 
+        // ---- إدارة البيانات ----
         function loadData() {
             const stored = localStorage.getItem(STORAGE_PRODUCTS);
             products = stored ? JSON.parse(stored) : defaultProducts;
@@ -738,11 +577,10 @@
             updateCartCount(); }
 
         function updateCartCount() {
-            const count = cart.reduce((s, i) => s + i.quantity, 0);
-            const el = document.getElementById('cartCount');
-            if (el) el.innerText = count;
+            document.getElementById('cartCount').innerText = cart.reduce((s, i) => s + i.quantity, 0);
         }
 
+        // ---- التصفية والبحث ----
         function getFilteredProducts() {
             let f = [...products];
             const cat = document.getElementById('filterCat')?.value;
@@ -756,6 +594,7 @@
             return f;
         }
 
+        // ---- عرض المنتجات ----
         function renderProductsGrid(containerId, list) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -765,30 +604,25 @@
                 return;
             }
             const catLabels = { todolists: '📋 قوائم مهام', planners: '📅 مخططات', others: '✨ إكسسوارات' };
-            const catColors = { todolists: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300',
-                planners: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
-                others: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' };
+            const catColors = { todolists: 'bg-indigo-100 text-indigo-700', planners: 'bg-purple-100 text-purple-700',
+                others: 'bg-amber-100 text-amber-700' };
             container.innerHTML = list.map((p, idx) => `
-            <div class="product-card flex flex-col" style="animation-delay:${idx*0.06}s">
-              <div class="img-wrapper h-52 bg-gray-100 dark:bg-slate-700 relative">
-                <img src="${p.imageUrl}" class="w-full h-full object-cover" loading="lazy" alt="${p.name}">
-                <span class="badge ${catColors[p.category]||'bg-gray-100'} px-3 py-1 rounded-full text-xs font-bold">${catLabels[p.category]||p.category}</span>
-                ${p.price < 40 ? '<span class="absolute top-12 right-3 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold z-10">🔥 عرض</span>' : ''}
-              </div>
-              <div class="p-4 flex flex-col flex-grow">
-                <h3 class="font-bold text-base mb-1 line-clamp-2">${p.name}</h3>
-                <div class="mt-auto flex justify-between items-center pt-3">
-                  <span class="text-xl font-extrabold text-emerald-600 dark:text-emerald-400">${p.price} ج.م</span>
+                <div class="product-card flex flex-col" style="animation-delay:${idx * 0.06}s">
+                    <div class="img-wrapper h-48 sm:h-52 bg-gray-100 relative">
+                        <img src="${p.imageUrl}" class="w-full h-full object-cover" loading="lazy" alt="${p.name}">
+                        <span class="badge ${catColors[p.category] || 'bg-gray-100'} px-3 py-1 rounded-full text-xs font-bold">${catLabels[p.category] || p.category}</span>
+                        ${p.price < 40 ? '<span class="absolute top-12 right-3 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold z-10">🔥 عرض</span>' : ''}
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="font-bold text-base mb-1 line-clamp-2">${p.name}</h3>
+                        <div class="mt-auto flex justify-between items-center pt-3">
+                            <span class="text-xl font-extrabold text-emerald-600">${p.price} ج.م</span>
+                        </div>
+                        <button onclick="app.addToCart('${p.id}', event)" class="mt-3 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-bold btn-3d text-sm transition">➕ أضف للسلة</button>
+                        <button onclick="app.showDetail('${p.id}')" class="mt-2 w-full border-2 border-indigo-300 text-indigo-600 py-2 rounded-xl font-semibold text-sm hover:bg-indigo-50 transition">🔍 التفاصيل</button>
+                    </div>
                 </div>
-                <button onclick="app.addToCart('${p.id}', event)" class="mt-3 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-bold btn-3d text-sm transition">
-                  ➕ أضف للسلة
-                </button>
-                <button onclick="app.showDetail('${p.id}')" class="mt-2 w-full border-2 border-indigo-300 dark:border-indigo-600 text-indigo-600 dark:text-indigo-400 py-2 rounded-xl font-semibold text-sm hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition">
-                  🔍 التفاصيل
-                </button>
-              </div>
-            </div>
-          `).join('');
+            `).join('');
         }
 
         function renderAllProducts() { renderProductsGrid('productsGrid', getFilteredProducts()); }
@@ -802,6 +636,7 @@
             setTimeout(refreshFilters, 150);
         }
 
+        // ---- تفاصيل المنتج ----
         function showDetail(id) {
             const p = products.find(p => p.id === id);
             if (!p) return;
@@ -813,8 +648,7 @@
             document.getElementById('detailPrice').innerHTML = `${p.price} <span class="text-base">ج.م</span>`;
             document.getElementById('detailDesc').innerText = p.description;
             const catLabels = { todolists: '📋 قوائم المهام', planners: '📅 مخططات شهرية', others: '✨ إكسسوارات' };
-            const catBadge = document.getElementById('detailCatBadge');
-            catBadge.innerText = catLabels[p.category] || p.category;
+            document.getElementById('detailCatBadge').innerText = catLabels[p.category] || p.category;
             const prev = document.getElementById('prevBtn'),
                 next = document.getElementById('nextBtn');
             if (currentImages.length > 1) { prev.style.display = 'flex';
@@ -835,6 +669,7 @@
             document.getElementById('detailImg').src = currentImages[currentImageIndex];
         }
 
+        // ---- السلة ----
         function addToCart(id, event) {
             const p = products.find(p => p.id === id);
             if (!p) return;
@@ -844,20 +679,16 @@
             saveCart();
             showToast(`✅ تم إضافة "${p.name}" إلى السلة`, 'success');
             renderCart();
-            // تأثير الكونفيتي
             if (event) {
                 const rect = event.target.getBoundingClientRect();
                 spawnConfetti(rect.left + rect.width / 2, rect.top);
             }
-            // نبض أيقونة السلة
             const cartBtn = document.getElementById('cartNavBtn');
             if (cartBtn) { cartBtn.classList.add('cart-bounce');
                 setTimeout(() => cartBtn.classList.remove('cart-bounce'), 500); }
         }
 
-        function addToCartFromDetail() {
-            if (currentDetailProduct) addToCart(currentDetailProduct.id);
-        }
+        function addToCartFromDetail() { if (currentDetailProduct) addToCart(currentDetailProduct.id); }
 
         function updateCartItem(id, delta) {
             const idx = cart.findIndex(i => i.id === id);
@@ -869,12 +700,10 @@
             }
         }
 
-        function removeCartItem(id) {
-            cart = cart.filter(i => i.id !== id);
+        function removeCartItem(id) { cart = cart.filter(i => i.id !== id);
             saveCart();
             renderCart();
-            showToast('🗑️ تمت الإزالة من السلة', 'success');
-        }
+            showToast('🗑️ تمت الإزالة من السلة', 'success'); }
 
         function renderCart() {
             const con = document.getElementById('cartItems'),
@@ -891,21 +720,18 @@
                 const it = item.price * item.quantity;
                 total += it;
                 return `
-              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-gray-200 dark:border-slate-600 pb-4 mb-4 gap-3">
-                <div class="flex gap-3 items-center">
-                  <img src="${item.image}" class="w-16 h-16 object-cover rounded-xl shadow-sm" alt="${item.name}">
-                  <div>
-                    <p class="font-bold">${item.name}</p>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">${item.price} ج.م × ${item.quantity}</p>
-                  </div>
-                </div>
-                <div class="flex items-center gap-2 self-end sm:self-center">
-                  <button onclick="app.updateCartItem('${item.id}', -1)" class="bg-gray-200 dark:bg-slate-600 w-8 h-8 rounded-full font-bold hover:bg-gray-300 transition">−</button>
-                  <span class="font-extrabold text-lg w-8 text-center">${item.quantity}</span>
-                  <button onclick="app.updateCartItem('${item.id}', 1)" class="bg-gray-200 dark:bg-slate-600 w-8 h-8 rounded-full font-bold hover:bg-gray-300 transition">+</button>
-                  <button onclick="app.removeCartItem('${item.id}')" class="text-red-500 hover:text-red-700 ml-2 transition" title="حذف"><i class="fas fa-trash-alt text-lg"></i></button>
-                </div>
-              </div>`;
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-gray-200 pb-4 mb-4 gap-3">
+                    <div class="flex gap-3 items-center">
+                        <img src="${item.image}" class="w-16 h-16 object-cover rounded-xl shadow-sm" alt="${item.name}">
+                        <div><p class="font-bold">${item.name}</p><p class="text-sm text-gray-500">${item.price} ج.م × ${item.quantity}</p></div>
+                    </div>
+                    <div class="flex items-center gap-2 self-end sm:self-center">
+                        <button onclick="app.updateCartItem('${item.id}', -1)" class="bg-gray-200 w-8 h-8 rounded-full font-bold hover:bg-gray-300 transition">−</button>
+                        <span class="font-extrabold text-lg w-8 text-center">${item.quantity}</span>
+                        <button onclick="app.updateCartItem('${item.id}', 1)" class="bg-gray-200 w-8 h-8 rounded-full font-bold hover:bg-gray-300 transition">+</button>
+                        <button onclick="app.removeCartItem('${item.id}')" class="text-red-500 hover:text-red-700 ml-2 transition"><i class="fas fa-trash-alt text-lg"></i></button>
+                    </div>
+                </div>`;
             }).join('');
             totalSpan.innerText = total;
         }
@@ -922,7 +748,8 @@
                 items += `• ${i.name} (${i.quantity}x) = ${it} ج.م\n`; });
             const msg =
                 `🛍️ *طلب جديد من رونق*\n\n👤 *العميل:* ${name}\n📍 *العنوان:* ${addr}\n\n📦 *المنتجات:*\n${items}\n💰 *الإجمالي:* ${total} ج.م\n\n✨ شكراً لثقتكم - فريق رونق`;
-            window.open(`https://wa.me/201112841647?text=${encodeURIComponent(msg)}`, '_blank');
+            // رقم الواتساب الجديد (01556727629) بصيغته الدولية
+            window.open(`https://wa.me/201556727629?text=${encodeURIComponent(msg)}`, '_blank');
             cart = [];
             saveCart();
             renderCart();
@@ -930,6 +757,7 @@
             navigate('home');
         }
 
+        // ---- التنقل بين الصفحات ----
         function navigate(page, addToHistory = true) {
             const views = document.querySelectorAll('.view');
             views.forEach(v => v.style.display = 'none');
@@ -952,38 +780,10 @@
                 navigate(last, false); }
         }
 
-        function restorePage() {
-            const last = localStorage.getItem(STORAGE_CURRENT_PAGE) || 'home';
-            navigate(last, true);
-        }
+        function restorePage() { const last = localStorage.getItem(STORAGE_CURRENT_PAGE) || 'home';
+            navigate(last, true); }
 
-        function initDarkMode() {
-            const toggle = document.getElementById('darkModeToggle');
-            const isDark = localStorage.getItem(STORAGE_DARK_MODE) === 'true';
-            if (isDark) document.body.classList.add('dark-mode');
-            toggle.innerHTML = isDark ? '☀️' : '🌙';
-            toggle.addEventListener('click', () => {
-                document.body.classList.toggle('dark-mode');
-                const dark = document.body.classList.contains('dark-mode');
-                localStorage.setItem(STORAGE_DARK_MODE, dark);
-                toggle.innerHTML = dark ? '☀️' : '🌙';
-            });
-        }
-
-        function initTypingEffect() {
-            const brand = document.getElementById('brandName');
-            const original = brand.innerText;
-            brand.innerText = '';
-            let i = 0;
-
-            function type() {
-                if (i < original.length) { brand.innerText += original.charAt(i);
-                    i++;
-                    setTimeout(type, 120); } else { brand.style.borderLeft = 'none'; }
-            }
-            type();
-        }
-
+        // ---- البحث الصوتي ----
         function initVoiceSearch() {
             const btn = document.getElementById('voiceSearchBtn'),
                 inp = document.getElementById('searchInput');
@@ -1014,16 +814,7 @@
                 isListening = false; };
         }
 
-        function initProgressBar() {
-            const bar = document.getElementById('pageProgressBar');
-            window.addEventListener('scroll', () => {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-                bar.style.width = Math.min(progress, 100) + '%';
-            });
-        }
-
+        // ---- التهيئة الأولية ----
         function init() {
             loadData();
             renderAllProducts();
@@ -1032,25 +823,12 @@
             document.getElementById('filterCat')?.addEventListener('change', refreshFilters);
             document.getElementById('filterPrice')?.addEventListener('change', refreshFilters);
             document.getElementById('searchInput')?.addEventListener('input', refreshFilters);
-            initDarkMode();
-            initTypingEffect();
             initVoiceSearch();
-            initProgressBar();
         }
 
-        // تعريض الدوال عالمياً
-        window.app = {
-            navigate,
-            showDetail,
-            addToCart,
-            addToCartFromDetail,
-            updateCartItem,
-            removeCartItem,
-            nextImage,
-            prevImage,
-            sendWhatsApp,
-            filterAndNavigate
-        };
+        // تعريض الدوال في النطاق العام
+        window.app = { navigate, showDetail, addToCart, addToCartFromDetail, updateCartItem, removeCartItem, nextImage,
+            prevImage, sendWhatsApp, filterAndNavigate };
         window.app.updateCartItem = updateCartItem;
         window.app.removeCartItem = removeCartItem;
         window.app.addToCart = addToCart;
