@@ -355,7 +355,7 @@
                 <div class="relative z-10">
                     <span class="inline-block bg-white/20 backdrop-blur px-4 py-1 rounded-full text-sm mb-4 font-semibold tracking-wide">✨ الأكثر مبيعاً في مصر</span>
                     <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-3 leading-tight" style="font-family:'El Messiri',sans-serif;">
-                        نظّم حياتك مع <span class="text-yellow-300">رونق</span>
+                        ابعتي  <span class="text-yellow-300">الصوررررررررررررر</span>
                     </h1>
                     <p class="text-base sm:text-lg md:text-xl opacity-90 mb-6 max-w-xl mx-auto">أفضل قوائم المهام والمخططات اليومية والشهرية بتصاميم أنيقة وجودة عالية</p>
                     <button onclick="app.navigate('products')" class="bg-white text-indigo-800 px-8 py-3 rounded-full font-extrabold text-lg btn-3d shadow-xl hover:shadow-2xl transition">
@@ -758,7 +758,7 @@
         function sendWhatsApp() {
             const name = document.getElementById('custName').value.trim();
             const addr = document.getElementById('custAddress').value.trim();
-            if (!name || !addr) { showToast('❌ يرجى ملء جميع بيانات الشحن', 'error'); return; }
+            if (!name || !addr) { showToast('❌ يرجى ملئ جميع بيانات الشحن', 'error'); return; }
             if (cart.length === 0) { showToast('❌ السلة فارغة، أضف منتجات أولاً', 'error'); return; }
             let items = '',
                 total = 0;
@@ -772,7 +772,7 @@
             cart = [];
             saveCart();
             renderCart();
-            showToast('✅ تم إرسال الطلب بنجاح!', 'success');
+            showToast('✅ تم إرسال طلبك بنجاح!', 'success');
             navigate('home');
         }
 
@@ -819,7 +819,7 @@
                     isListening = true;
                     btn.classList.add('listening');
                     showToast('🎤 استمع إليك... تحدث الآن', 'success');
-                } catch (e) { showToast('⚠️ خطأ في الميكروفون', 'error'); }
+                } catch (e) { showToast('⚠️ حدث خطأ', 'error'); }
             });
             recognition.onresult = e => {
                 inp.value = e.results[0][0].transcript;
