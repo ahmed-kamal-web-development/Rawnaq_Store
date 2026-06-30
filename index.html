@@ -470,7 +470,7 @@
                 <input id="custName" placeholder="الاسم الكامل" class="w-full border-2 border-gray-200 bg-white rounded-xl p-3 mb-4 focus:ring-2 focus:ring-indigo-400 outline-none transition">
                 <textarea id="custAddress" placeholder="العنوان التفصيلي (المحافظة - المدينة - الشارع)" rows="3" class="w-full border-2 border-gray-200 bg-white rounded-xl p-3 mb-4 focus:ring-2 focus:ring-indigo-400 outline-none transition"></textarea>
                 <button onclick="app.sendWhatsApp()" class="bg-green-600 hover:bg-green-700 text-white w-full py-3.5 rounded-xl text-lg font-extrabold btn-3d btn-3d-green transition">
-                    ✅ إرسال الطلب عبر واتساب
+                    ✅ تأكيد الطلب
                 </button>
             </div>
         </div>
@@ -481,7 +481,7 @@
 
     <!-- فوتر -->
     <footer class="text-center py-6 text-gray-500 text-sm border-t border-gray-200 mt-10">
-        <p>© 2026 <strong>رونق</strong> - جميع الحقوق محفوظة | صنع بكل ❤️ في مصر</p>
+        <p>© 2026 <strong>رونق</strong> - جميع الحقوق محفوظة | صنع بكل حب ❤️ في مصر</p>
     </footer>
 
     <!-- ======================== JavaScript ======================== -->
@@ -493,13 +493,20 @@
 
 
 
+  
+
+
+
+
+
+
 
 
         // ===== قائمة المنتجات (يمكنك إضافة منتجاتك هنا) =====
         const defaultProducts = [
-            { id: 'p1', name: 'مفكرة قائمة المهام اليومية', price: 45, category: 'todolists', description: 'دفتر صغير بتصميم أنيق يحتوي على 50 ورقة من الورق الفاخر، مثالي للاستخدام اليومي وتنظيم أولوياتك.', imageUrl: 'https://picsum.photos/id/20/500/400', images: ['https://picsum.photos/id/20/500/400','https://picsum.photos/id/21/500/400','https://picsum.photos/id/26/500/400'] },
-            { id: 'p2', name: 'لوحة مغناطيسية للتخطيط الأسبوعي', price: 120, category: 'planners', description: 'لوحة بيضاء مغناطيسية بحجم A3 مع قلم ماركر وممحاة، رائعة للمكتب والمنزل.', imageUrl: 'https://picsum.photos/id/40/500/400', images: ['https://picsum.photos/id/40/500/400','https://picsum.photos/id/41/500/400','https://picsum.photos/id/42/500/400'] },
-            { id: 'p3', name: 'مجموعة ملصقات تنظيمية ملونة', price: 25, category: 'others', description: 'مجموعة من 100 ملصق لاصق بألوان وأشكال متعددة لتحديد الأولويات والملاحظات.', imageUrl: 'https://picsum.photos/id/30/500/400', images: ['https://picsum.photos/id/30/500/400','https://picsum.photos/id/31/500/400'] },
+            { id: 'p1', name: 'دي منتجات مزيفه', price: 45, category: 'todolists', description: 'دفتر صغير بتصميم أنيق يحتوي على 50 ورقة من الورق الفاخر، مثالي للاستخدام اليومي وتنظيم أولوياتك.', imageUrl: 'https://picsum.photos/id/20/500/400', images: ['https://picsum.photos/id/20/500/400','https://picsum.photos/id/21/500/400','https://picsum.photos/id/26/500/400'] },
+            { id: 'p2', name: 'دي منتجات مزيفه', price: 120, category: 'planners', description: 'لوحة بيضاء مغناطيسية بحجم A3 مع قلم ماركر وممحاة، رائعة للمكتب والمنزل.', imageUrl: 'https://picsum.photos/id/40/500/400', images: ['https://picsum.photos/id/40/500/400','https://picsum.photos/id/41/500/400','https://picsum.photos/id/42/500/400'] },
+            { id: 'p3', name: 'دي منتجات مزيفه', price: 25, category: 'others', description: 'مجموعة من 100 ملصق لاصق بألوان وأشكال متعددة لتحديد الأولويات والملاحظات.', imageUrl: 'https://picsum.photos/id/30/500/400', images: ['https://picsum.photos/id/30/500/400','https://picsum.photos/id/31/500/400'] },
             { id: 'p4', name: 'مخطط شهري حائطي كبير', price: 85, category: 'planners', description: 'مخطط حجم كبير 70×100 سم بتصميم عصري، يساعدك على رؤية الشهر كاملاً بوضوح.', imageUrl: 'https://picsum.photos/id/50/500/400', images: ['https://picsum.photos/id/50/500/400','https://picsum.photos/id/51/500/400'] },
             { id: 'p5', name: 'دفتر قوائم التسوق الذكي', price: 30, category: 'todolists', description: 'دفتر صغير مع مقسمات مدمجة لقائمة المشتريات، مثالي للتسوق الأسبوعي.', imageUrl: 'https://picsum.photos/id/60/500/400', images: ['https://picsum.photos/id/60/500/400','https://picsum.photos/id/61/500/400'] },
             { id: 'p6', name: 'حامل هاتف مع لوحة تخطيط', price: 95, category: 'planners', description: 'حامل أكريليك شفاف يجمع بين حامل الهاتف ولوحة تخطيط أسبوعية أنيقة.', imageUrl: 'https://picsum.photos/id/70/500/400', images: ['https://picsum.photos/id/70/500/400','https://picsum.photos/id/71/500/400'] },
@@ -513,6 +520,18 @@
             { id: 'p14', name: 'دفتر الأولويات الأسبوعي', price: 48, category: 'todolists', description: 'دفتر صغير بحجم الجيب لتحديد أولويات الأسبوع مع نظام ترميز لوني.', imageUrl: 'https://picsum.photos/id/150/500/400', images: ['https://picsum.photos/id/150/500/400','https://picsum.photos/id/151/500/400'] },
             { id: 'p15', name: 'مخطط رقمي PDF قابل للطباعة', price: 25, category: 'planners', description: 'ملف PDF احترافي يحتوي على 12 قالباً مختلفاً للطباعة والاستخدام الفوري.', imageUrl: 'https://picsum.photos/id/160/500/400', images: ['https://picsum.photos/id/160/500/400','https://picsum.photos/id/161/500/400'] }
         ];
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -747,7 +766,7 @@
                 total += it;
                 items += `• ${i.name} (${i.quantity}x) = ${it} ج.م\n`; });
             const msg =
-                `🛍️ *طلب جديد من رونق*\n\n👤 *العميل:* ${name}\n📍 *العنوان:* ${addr}\n\n📦 *المنتجات:*\n${items}\n💰 *الإجمالي:* ${total} ج.م\n\n✨ شكراً لثقتكم - فريق رونق`;
+                ` *طلب جديد من رونق*\n\n *العميل:* ${name}\n *العنوان:* ${addr}\n\n *المنتجات:*\n${items}\n *الإجمالي:* ${total} ج.م\n\n شكراً لثقتكم - فريق رونق`;
             // رقم الواتساب الجديد (01556727629) بصيغته الدولية
             window.open(`https://wa.me/201556727629?text=${encodeURIComponent(msg)}`, '_blank');
             cart = [];
