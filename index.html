@@ -6,12 +6,10 @@
     <meta name="theme-color" content="#1e1b4b">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <!-- منع ترجمة جوجل -->
     <meta name="google" content="notranslate">
     <meta name="google-translate-custom" content="notranslate">
     <title>رونق - متجر قوائم المهام والمخططات</title>
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -303,7 +301,6 @@
         }
         .cart-bounce { animation: cartBounce 0.5s ease; }
 
-        /* تحسينات خاصة بالموبايل */
         @media (max-width: 768px) {
             .hero-gradient h1 {
                 font-size: 1.8rem;
@@ -324,7 +321,6 @@
                 font-size: 1rem;
             }
         }
-        /* زر النقصان معطل */
         .qty-btn-disabled {
             opacity: 0.5;
             cursor: not-allowed;
@@ -334,7 +330,6 @@
 </head>
 <body class="bg-gray-50" translate="no">
 
-    <!-- شريط التنقل العلوي -->
     <nav class="nav-glass text-white sticky top-0 z-50 shadow-lg" translate="no">
         <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
             <div id="brandName" class="text-2xl font-extrabold cursor-pointer select-none tracking-tight" style="font-family:'El Messiri',sans-serif;">
@@ -355,10 +350,8 @@
         </div>
     </nav>
 
-    <!-- المحتوى الرئيسي -->
     <div class="container mx-auto px-4 py-6" translate="no">
 
-        <!-- الرئيسية -->
         <div id="homeView" class="view">
             <div class="hero-gradient rounded-3xl text-white p-6 sm:p-8 md:p-12 mb-10 text-center relative overflow-hidden shadow-2xl">
                 <div class="relative z-10">
@@ -378,7 +371,6 @@
                 </div>
             </div>
 
-            <!-- فئات المنتجات -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10">
                 <div class="category-card bg-white rounded-2xl shadow-md p-6 text-center border-2 border-transparent" onclick="app.filterAndNavigate('todolists')">
                     <div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl">📋</div>
@@ -397,7 +389,6 @@
                 </div>
             </div>
 
-            <!-- مميزات المتجر -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-10">
                 <div class="bg-white rounded-2xl p-4 sm:p-5 text-center shadow-sm"><i class="fas fa-truck text-2xl text-indigo-500 mb-2"></i><p class="font-bold text-xs sm:text-sm">توصيل سريع</p></div>
                 <div class="bg-white rounded-2xl p-4 sm:p-5 text-center shadow-sm"><i class="fas fa-lock text-2xl text-indigo-500 mb-2"></i><p class="font-bold text-xs sm:text-sm">دفع آمن</p></div>
@@ -405,7 +396,6 @@
                 <div class="bg-white rounded-2xl p-4 sm:p-5 text-center shadow-sm"><i class="fas fa-undo text-2xl text-indigo-500 mb-2"></i><p class="font-bold text-xs sm:text-sm">ضمان 14 يوم</p></div>
             </div>
 
-            <!-- وسائل التواصل الاجتماعي -->
             <div class="bg-white rounded-2xl p-6 text-center shadow-sm">
                 <h3 class="font-bold text-lg mb-4">📲  تابعنا على</h3>
                 <div class="flex justify-center gap-6">
@@ -416,7 +406,6 @@
             </div>
         </div>
 
-        <!-- صفحة المنتجات -->
         <div id="productsView" class="view">
             <div class="flex flex-wrap gap-3 mb-5">
                 <select id="filterCat" class="flex-1 min-w-[140px] border-2 border-gray-200 bg-white rounded-xl px-4 py-3 text-sm font-semibold focus:ring-2 focus:ring-indigo-400 outline-none transition">
@@ -439,7 +428,6 @@
             <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"></div>
         </div>
 
-        <!-- صفحة تفاصيل المنتج -->
         <div id="detailView" class="view">
             <div class="bg-white rounded-3xl shadow-xl p-6 relative max-w-3xl mx-auto">
                 <button onclick="app.navigate('products')" class="mb-4 text-indigo-600 font-semibold hover:underline text-sm">
@@ -460,7 +448,6 @@
             </div>
         </div>
 
-        <!-- صفحة السلة -->
         <div id="cartView" class="view">
             <h2 class="text-2xl font-extrabold mb-5">🛒 سلة المشتريات</h2>
             <div id="cartItems" class="bg-white rounded-2xl shadow-md p-5"></div>
@@ -472,7 +459,6 @@
             </div>
         </div>
 
-        <!-- صفحة إتمام الشراء -->
         <div id="checkoutView" class="view">
             <div class="bg-white p-7 rounded-3xl shadow-xl max-w-lg mx-auto">
                 <h2 class="text-2xl font-extrabold mb-5">📦 بيانات الشحن</h2>
@@ -485,18 +471,13 @@
         </div>
     </div>
 
-    <!-- حاوية الإشعارات المنبثقة -->
     <div id="toastContainer"></div>
 
-    <!-- فوتر -->
     <footer class="text-center py-6 text-gray-500 text-sm border-t border-gray-200 mt-10">
         <p>© 2026 <strong>رونق</strong> - جميع الحقوق محفوظة | صنع بكل حب ❤️ في مصر</p>
     </footer>
 
-    <!-- ======================== JavaScript ======================== -->
     <script>
-        // إعدادات التخزين المحلي
-        const STORAGE_PRODUCTS = 'rawnaq_products_v2';
         const STORAGE_CART = 'rawnaq_cart_v2';
         const STORAGE_CURRENT_PAGE = 'rawnaq_current_page';
 
@@ -527,23 +508,50 @@
 
 
 
-        // ===== قايمة المنتجات (اضيف المنتجات هنا) =====
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         const defaultProducts = [
             { id: 'p1', name: 'مهام بطوطه', price: 65, category: 'todolists', description: 'TO-DO LIST مهام بطوطه ب ورق مميز وأنيق وبسعر 65 جنيه .', imageUrl: 'بطوطه.png', images: ['بطوطه.png','مهام بطوطه.png'] },
             { id: 'p2', name: ' weekly planer', price: 120, category: 'planners', description: 'مخطط اسبوعي بغلاف بسعر 120جنيه.', imageUrl: 'بلان.jpg', images: ['بلانر اسبوعيه.png','بلان.jpg']},
-            { id: 'p3', name: 'Note "المتعة في الطريق"', price: 50, category: 'todolists', description: 'نوتس سلك بشكل وحجم مميزين لكتابة الملاحظات والمهام اليومية 📝:الغلاف مزود بطبقة حماية , 50ورقه', imageUrl: 'المتعه في الطريق1.png', images: ['المتعه في الطريق2.png','المتعه في الطريق1.png'] },
+            { id: 'p3', name: 'Note "المتعة في الطريق"', price: 55, category: 'todolists', description: 'نوتس سلك بشكل وحجم مميزين لكتابة الملاحظات والمهام اليومية 📝:الغلاف مزود بطبقة حماية , 50ورقه', imageUrl: 'المتعه في الطريق1.png', images: ['المتعه في الطريق2.png','المتعه في الطريق1.png'] },
             { id: 'p4', name: 'دفتر سلك ولسوف يعطيك', price: 125, category: 'planners', description: 'دفتر "ولسوف يعطيك ربك فترضى",مقاس A5 ,100 ورقه ', imageUrl: 'ولسوف يعطيك.png', images: ['ولسوف يعطيك.png'] },
-            { id: 'p5', name: 'انت بطل عالمك', price: 125, category: 'planners', description: 'انت بطل عالمك بسعر 125 جنيه', imageUrl: 'you are king of your world.png', images: ['you are king of your world.png'] },
-            { id: 'p6', name: 'حامل هاتف مع لوحة تخطيط', price: 95, category: 'planners', description: 'حامل أكريليك شفاف يجمع بين حامل الهاتف ولوحة تخطيط أسبوعية أنيقة.', imageUrl: 'https://picsum.photos/id/70/500/400', images: ['https://picsum.photos/id/70/500/400','https://picsum.photos/id/71/500/400'] },
-            { id: 'p7', name: 'طقم أقلام تحديد قابلة للمسح', price: 40, category: 'others', description: '5 أقلام تحديد بألوان زاهية قابلة للمسح، مثالية للوحات البيضاء والورق.', imageUrl: 'https://picsum.photos/id/80/500/400', images: ['https://picsum.photos/id/80/500/400','https://picsum.photos/id/81/500/400'] },
-            { id: 'p8', name: 'مفكرة أهداف ذكية 90 يوم', price: 65, category: 'todolists', description: 'مفكرة بتصميم فريد لتتبع الأهداف اليومية والإنجازات لمدة 90 يوماً.', imageUrl: 'https://picsum.photos/id/90/500/400', images: ['https://picsum.photos/id/90/500/400','https://picsum.photos/id/91/500/400'] },
-            { id: 'p9', name: 'باكج تنظيمي شامل', price: 150, category: 'todolists', description: 'حزمة متكاملة تحتوي على مفكرة يومية، قلم، وملصقات تحفيزية في علبة هدايا.', imageUrl: 'https://picsum.photos/id/100/500/400', images: ['https://picsum.photos/id/100/500/400','https://picsum.photos/id/101/500/400'] },
-            { id: 'p10', name: 'دفتر تتبع العادات اليومية', price: 55, category: 'planners', description: 'دفتر أنيق لمتابعة العادات اليومية لمدة 66 يوماً مع رسوم بيانية تحفيزية.', imageUrl: 'https://picsum.photos/id/110/500/400', images: ['https://picsum.photos/id/110/500/400','https://picsum.photos/id/111/500/400'] },
-            { id: 'p11', name: 'مجموعة ملصقات تحفيزية', price: 35, category: 'others', description: '20 ملصقاً تحفيزياً بتصاميم ملهمة لتزيين مكتبك ودفترك.', imageUrl: 'https://picsum.photos/id/120/500/400', images: ['https://picsum.photos/id/120/500/400','https://picsum.photos/id/121/500/400'] },
-            { id: 'p12', name: 'لوحة تنظيم المهام المنزلية', price: 110, category: 'planners', description: 'لوحة خشبية عصرية لتنظيم الأعمال المنزلية اليومية والأسبوعية لكل أفراد الأسرة.', imageUrl: 'https://picsum.photos/id/130/500/400', images: ['https://picsum.photos/id/130/500/400','https://picsum.photos/id/131/500/400'] },
-            { id: 'p13', name: 'ساعة رملية إنتاجية 30 دقيقة', price: 75, category: 'others', description: 'ساعة رملية زجاجية أنيقة بتقنية بومودورو لتعزيز التركيز والإنتاجية.', imageUrl: 'https://picsum.photos/id/140/500/400', images: ['https://picsum.photos/id/140/500/400','https://picsum.photos/id/141/500/400'] },
-            { id: 'p14', name: 'دفتر الأولويات الأسبوعي', price: 48, category: 'todolists', description: 'دفتر صغير بحجم الجيب لتحديد أولويات الأسبوع مع نظام ترميز لوني.', imageUrl: 'https://picsum.photos/id/150/500/400', images: ['https://picsum.photos/id/150/500/400','https://picsum.photos/id/151/500/400'] },
-            { id: 'p15', name: 'مخطط رقمي PDF قابل للطباعة', price: 25, category: 'planners', description: 'ملف PDF احترافي يحتوي على 12 قالباً مختلفاً للطباعة والاستخدام الفوري.', imageUrl: 'https://picsum.photos/id/160/500/400', images: ['https://picsum.photos/id/160/500/400','https://picsum.photos/id/161/500/400'] }
+            { id: 'p5', name: 'أنت بطل عالمك', price: 125, category: 'planners', description: 'انت بطل عالمك بسعر 125 جنيه', imageUrl: 'you are king of your world.png', images: ['you are king of your world.png'] },
+            { id: 'p6', name: 'برواز تخرج مخصص بالاسم🎓', price: 130, category: 'planners', description: 'ورق مقوى مزود بطبقة حماية، برواز زجاج أسود، مع إمكانية تعديل (الاسم، الكلية، السنة، والعبارات المكتوبة) المقاس: 20*30 cm', imageUrl: 'برواز تخرج.jpg', images: ['برواز 2.jpg','برواز تخرج.jpg'] },
+            { id: 'p7', name: 'توزيعات بالونات سمايلي', price: 80, category: 'others', description: ' توزيعات بالونات مبهجة للحفلات والمناسبات. 20 كارت سمايل ورق مقوى سميك مع بالونات عالية الجودة، مع إمكانية تعديل الألوان لتليق بمناسبتك.', imageUrl: 'سمايلي 1.jpg', images: ['سمايلي 2.jpg','سمايلي 1.jpg'] },
+            { id: 'p8', name: 'ستيكر شكولاته توزيعات', price: 80, category: 'todolists', description: '100 ستيكر شكولاته توزيعات للمناسبات والحفلات، بالاسم والتصميم اللى تختاريه، مقاس 4*4 cm', imageUrl: 'ستيكر1.jpg', images: ['ستيكر2.jpg','ستيكر3.jpg','ستيكر1.jpg'] },
+            { id: 'p9', name: 'ميدالية أذكار الصباح والمساء', price: 30, category: 'todolists', description: 'توزيعات ميدالية اذكار الصباح والمساء، من أفضل التوزيعات اللى شكلها مبهج جداً وكمان بتكون صدقة جارية ليك.، ورق مقوى مزود بطبقة حماية', imageUrl: 'اذكار1.jpg', images: ['اذكار2.jpg','اذكار3.jpg','اذكار1.jpg'] },
+            { id: 'p10', name: 'متتبع العبادات والعادات الشهري', price: 25, category: 'planners', description: 'شيت متتبع العادات، ورق مقوى، مزود بطبقة حماية بلاستيكية للكتابه عليه والمسح وإعادة الاستخدام للشهر التالي... مقسم إلى: أهداف الشهر ، متتبع الصلاة والاذكار و القران ، متتبع لعادة تريد اكتسابها او التخلص منها ، المقاس: 21*30 cm', imageUrl: 'عادات1.jpg', images: ['عادات1.jpg'] },
+            { id: 'p11', name: 'شيت أذكار النوم', price: 20, category: 'others', description: 'ورق مقوى مزود بطبقة حماية 💧، المقاس: 15*21 cm', imageUrl: 'نوم1.jpg', images: ['نوم2.jpg','نوم1.jpg'] },
+            
         ];
 
 
@@ -569,23 +577,31 @@
 
 
 
-        
-        // المتغيرات العامة
-        let products = [],
-            cart = [],
-            currentDetailProduct = null,
-            currentImages = [],
-            currentImageIndex = 0;
-        let recognition = null,
-            isListening = false;
 
-        // ---- دوال المساعدة ----
+
+
+
+
+
+
+
+
+
+
+
+        let products = [];
+        let cart = [];
+        let currentDetailProduct = null;
+        let currentImages = [];
+        let currentImageIndex = 0;
+        let recognition = null;
+        let isListening = false;
+
         function showToast(msg, type = 'success') {
             const cont = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = `toast-notification ${type}`;
-            toast.innerHTML =
-                `${type === 'success' ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-exclamation-triangle"></i>'} <span>${msg}</span>`;
+            toast.innerHTML = `${type === 'success' ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-exclamation-triangle"></i>'} <span>${msg}</span>`;
             cont.appendChild(toast);
             requestAnimationFrame(() => toast.classList.add('show'));
             setTimeout(() => {
@@ -606,62 +622,53 @@
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
                 particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
                 particle.style.animationDuration = (0.6 + Math.random() * 0.8) + 's';
-                particle.style.transform =
-                    `translate(${(Math.random() - 0.5) * 120}px, ${-Math.random() * 100}px) rotate(${Math.random() * 360}deg)`;
+                particle.style.transform = `translate(${(Math.random() - 0.5) * 120}px, ${-Math.random() * 100}px) rotate(${Math.random() * 360}deg)`;
                 document.body.appendChild(particle);
                 setTimeout(() => particle.remove(), 1000);
             }
         }
 
-        // ---- إدارة البيانات ----
         function loadData() {
-            const stored = localStorage.getItem(STORAGE_PRODUCTS);
-            products = stored ? JSON.parse(stored) : defaultProducts;
-            if (!stored) saveProducts();
+            products = [...defaultProducts];
             const cartStored = localStorage.getItem(STORAGE_CART);
             cart = cartStored ? JSON.parse(cartStored) : [];
             updateCartCount();
         }
 
-        function saveProducts() { localStorage.setItem(STORAGE_PRODUCTS, JSON.stringify(products)); }
-
-        function saveCart() { localStorage.setItem(STORAGE_CART, JSON.stringify(cart));
-            updateCartCount(); }
+        function saveCart() {
+            localStorage.setItem(STORAGE_CART, JSON.stringify(cart));
+            updateCartCount();
+        }
 
         function updateCartCount() {
             document.getElementById('cartCount').innerText = cart.reduce((s, i) => s + i.quantity, 0);
         }
 
-        // ---- التصفية والبحث ----
         function getFilteredProducts() {
             let f = [...products];
             const cat = document.getElementById('filterCat')?.value;
             const priceOrder = document.getElementById('filterPrice')?.value;
             const search = document.getElementById('searchInput')?.value.trim().toLowerCase() || '';
             if (cat && cat !== 'all') f = f.filter(p => p.category === cat);
-            if (search) f = f.filter(p => p.name.toLowerCase().includes(search) || p.description.toLowerCase().includes(
-                search));
+            if (search) f = f.filter(p => p.name.toLowerCase().includes(search) || p.description.toLowerCase().includes(search));
             if (priceOrder === 'low') f.sort((a, b) => a.price - b.price);
             if (priceOrder === 'high') f.sort((a, b) => b.price - a.price);
             return f;
         }
 
-        // ---- عرض المنتجات ----
         function renderProductsGrid(containerId, list) {
             const container = document.getElementById(containerId);
             if (!container) return;
             if (list.length === 0) {
-                container.innerHTML =
-                    '<div class="col-span-full text-center py-16 text-gray-400"><i class="fas fa-box-open text-5xl mb-3"></i><p class="text-lg">لا توجد منتجات تطابق بحثك</p></div>';
+                container.innerHTML = '<div class="col-span-full text-center py-16 text-gray-400"><i class="fas fa-box-open text-5xl mb-3"></i><p class="text-lg">لا توجد منتجات تطابق بحثك</p></div>';
                 return;
             }
             const catLabels = { todolists: '📋 قوائم مهام', planners: '📅 مخططات', others: '✨ إكسسوارات' };
-            const catColors = { todolists: 'bg-indigo-100 text-indigo-700', planners: 'bg-purple-100 text-purple-700',
-                others: 'bg-amber-100 text-amber-700' };
+            const catColors = { todolists: 'bg-indigo-100 text-indigo-700', planners: 'bg-purple-100 text-purple-700', others: 'bg-amber-100 text-amber-700' };
             container.innerHTML = list.map((p, idx) => `
                 <div class="product-card flex flex-col" style="animation-delay:${idx * 0.06}s">
                     <div class="img-wrapper h-48 sm:h-52 bg-gray-100 relative">
-                        <img src="${p.imageUrl}" class="w-full h-full object-cover" loading="lazy" alt="${p.name}">
+                        <img src="${p.imageUrl}" class="w-full h-full object-contain bg-gray-100" loading="lazy" alt="${p.name}">
                         <span class="badge ${catColors[p.category] || 'bg-gray-100'} px-3 py-1 rounded-full text-xs font-bold">${catLabels[p.category] || p.category}</span>
                         ${p.price < 40 ? '<span class="absolute top-12 right-3 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold z-10">🔥 عرض</span>' : ''}
                     </div>
@@ -688,7 +695,6 @@
             setTimeout(refreshFilters, 150);
         }
 
-        // ---- تفاصيل المنتج ----
         function showDetail(id) {
             const p = products.find(p => p.id === id);
             if (!p) return;
@@ -701,11 +707,8 @@
             document.getElementById('detailDesc').innerText = p.description;
             const catLabels = { todolists: '📋 قوائم المهام', planners: '📅 مخططات شهرية', others: '✨ إكسسوارات' };
             document.getElementById('detailCatBadge').innerText = catLabels[p.category] || p.category;
-            const prev = document.getElementById('prevBtn'),
-                next = document.getElementById('nextBtn');
-            if (currentImages.length > 1) { prev.style.display = 'flex';
-                next.style.display = 'flex'; } else { prev.style.display = 'none';
-                next.style.display = 'none'; }
+            const prev = document.getElementById('prevBtn'), next = document.getElementById('nextBtn');
+            if (currentImages.length > 1) { prev.style.display = 'flex'; next.style.display = 'flex'; } else { prev.style.display = 'none'; next.style.display = 'none'; }
             navigate('detail');
         }
 
@@ -721,13 +724,11 @@
             document.getElementById('detailImg').src = currentImages[currentImageIndex];
         }
 
-        // ---- السلة ----
         function addToCart(id, event) {
             const p = products.find(p => p.id === id);
             if (!p) return;
             const existing = cart.find(i => i.id === id);
-            existing ? existing.quantity++ : cart.push({ id: p.id, name: p.name, price: p.price, image: p.imageUrl,
-                quantity: 1 });
+            existing ? existing.quantity++ : cart.push({ id: p.id, name: p.name, price: p.price, image: p.imageUrl, quantity: 1 });
             saveCart();
             showToast(`✅ تم إضافة "${p.name}" إلى السلة`, 'success');
             renderCart();
@@ -736,8 +737,7 @@
                 spawnConfetti(rect.left + rect.width / 2, rect.top);
             }
             const cartBtn = document.getElementById('cartNavBtn');
-            if (cartBtn) { cartBtn.classList.add('cart-bounce');
-                setTimeout(() => cartBtn.classList.remove('cart-bounce'), 500); }
+            if (cartBtn) { cartBtn.classList.add('cart-bounce'); setTimeout(() => cartBtn.classList.remove('cart-bounce'), 500); }
         }
 
         function addToCartFromDetail() { if (currentDetailProduct) addToCart(currentDetailProduct.id); }
@@ -745,7 +745,6 @@
         function updateCartItem(id, delta) {
             const idx = cart.findIndex(i => i.id === id);
             if (idx !== -1) {
-                // منع النقصان إذا كانت الكمية 1 و delta سالب
                 if (delta < 0 && cart[idx].quantity <= 1) {
                     showToast('⚠️ لا يمكن تقليل الكمية عن 1، استخدم زر الحذف للإزالة', 'error');
                     return;
@@ -757,18 +756,18 @@
             }
         }
 
-        function removeCartItem(id) { cart = cart.filter(i => i.id !== id);
+        function removeCartItem(id) {
+            cart = cart.filter(i => i.id !== id);
             saveCart();
             renderCart();
-            showToast('🗑️ تمت الإزالة من السلة', 'success'); }
+            showToast('🗑️ تمت الإزالة من السلة', 'success');
+        }
 
         function renderCart() {
-            const con = document.getElementById('cartItems'),
-                totalSpan = document.getElementById('cartTotal');
+            const con = document.getElementById('cartItems'), totalSpan = document.getElementById('cartTotal');
             if (!con) return;
             if (cart.length === 0) {
-                con.innerHTML =
-                    '<div class="text-center py-12 text-gray-400"><i class="fas fa-shopping-cart text-5xl mb-3"></i><p class="text-lg">السلة فارغة حالياً</p><button onclick="app.navigate(\'products\')" class="mt-3 text-indigo-500 font-semibold hover:underline">تصفح المنتجات</button></div>';
+                con.innerHTML = '<div class="text-center py-12 text-gray-400"><i class="fas fa-shopping-cart text-5xl mb-3"></i><p class="text-lg">السلة فارغة حالياً</p><button onclick="app.navigate(\'products\')" class="mt-3 text-indigo-500 font-semibold hover:underline">تصفح المنتجات</button></div>';
                 totalSpan.innerText = '0';
                 return;
             }
@@ -795,7 +794,6 @@
         }
 
         function sendWhatsApp() {
-            // التحقق من أن السلة ليست فارغة
             if (cart.length === 0) {
                 showToast('❌ السلة فارغة، أضف منتجات أولاً', 'error');
                 return;
@@ -803,13 +801,9 @@
             const name = document.getElementById('custName').value.trim();
             const addr = document.getElementById('custAddress').value.trim();
             if (!name || !addr) { showToast('❌ يرجى ملئ جميع بيانات الشحن', 'error'); return; }
-            let items = '',
-                total = 0;
-            cart.forEach(i => { const it = i.price * i.quantity;
-                total += it;
-                items += `• ${i.name} (${i.quantity}x) = ${it} ج.م\n`; });
-            const msg =
-                ` *طلب جديد من رونق*\n\n *العميل:* ${name}\n *العنوان:* ${addr}\n\n *المنتجات:*\n${items}\n *الإجمالي:* ${total} ج.م\n\n شكراً لثقتكم - فريق رونق`;
+            let items = '', total = 0;
+            cart.forEach(i => { const it = i.price * i.quantity; total += it; items += `• ${i.name} (${i.quantity}x) = ${it} ج.م\n`; });
+            const msg = ` *طلب جديد من رونق*\n\n *العميل:* ${name}\n *العنوان:* ${addr}\n\n *المنتجات:*\n${items}\n *الإجمالي:* ${total} ج.م\n\n شكراً لثقتكم - فريق رونق`;
             window.open(`https://wa.me/201556727629?text=${encodeURIComponent(msg)}`, '_blank');
             cart = [];
             saveCart();
@@ -818,12 +812,10 @@
             navigate('home');
         }
 
-        // ---- التنقل بين الصفحات ----
         function navigate(page, addToHistory = true) {
             const views = document.querySelectorAll('.view');
             views.forEach(v => v.style.display = 'none');
-            const map = { home: 'homeView', products: 'productsView', cart: 'cartView', checkout: 'checkoutView',
-                detail: 'detailView' };
+            const map = { home: 'homeView', products: 'productsView', cart: 'cartView', checkout: 'checkoutView', detail: 'detailView' };
             const vid = map[page];
             if (!vid) return;
             document.getElementById(vid).style.display = 'block';
@@ -837,17 +829,13 @@
         function handlePopState(e) {
             const s = e.state;
             if (s && s.page) navigate(s.page, false);
-            else { const last = localStorage.getItem(STORAGE_CURRENT_PAGE) || 'home';
-                navigate(last, false); }
+            else { const last = localStorage.getItem(STORAGE_CURRENT_PAGE) || 'home'; navigate(last, false); }
         }
 
-        function restorePage() { const last = localStorage.getItem(STORAGE_CURRENT_PAGE) || 'home';
-            navigate(last, true); }
+        function restorePage() { const last = localStorage.getItem(STORAGE_CURRENT_PAGE) || 'home'; navigate(last, true); }
 
-        // ---- البحث الصوتي ----
         function initVoiceSearch() {
-            const btn = document.getElementById('voiceSearchBtn'),
-                inp = document.getElementById('searchInput');
+            const btn = document.getElementById('voiceSearchBtn'), inp = document.getElementById('searchInput');
             if (!btn || !inp) return;
             if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) { btn.style.display = 'none'; return; }
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -869,13 +857,10 @@
                 btn.classList.remove('listening');
                 isListening = false;
             };
-            recognition.onerror = () => { btn.classList.remove('listening');
-                isListening = false; };
-            recognition.onend = () => { btn.classList.remove('listening');
-                isListening = false; };
+            recognition.onerror = () => { btn.classList.remove('listening'); isListening = false; };
+            recognition.onend = () => { btn.classList.remove('listening'); isListening = false; };
         }
 
-        // ---- التهيئة الأولية ----
         function init() {
             loadData();
             renderAllProducts();
@@ -887,9 +872,7 @@
             initVoiceSearch();
         }
 
-        // تعريض الدوال في النطاق العام
-        window.app = { navigate, showDetail, addToCart, addToCartFromDetail, updateCartItem, removeCartItem, nextImage,
-            prevImage, sendWhatsApp, filterAndNavigate };
+        window.app = { navigate, showDetail, addToCart, addToCartFromDetail, updateCartItem, removeCartItem, nextImage, prevImage, sendWhatsApp, filterAndNavigate };
         window.app.updateCartItem = updateCartItem;
         window.app.removeCartItem = removeCartItem;
         window.app.addToCart = addToCart;
